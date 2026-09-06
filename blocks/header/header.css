@@ -209,6 +209,15 @@ header .nav-hamburger {
   z-index: 30;
 }
 
+/* When open, move the ✕ to the top-right corner of the drawer (drawer spans
+   left:0 to min(75vw, 320px)). */
+header nav[aria-expanded='true'] .nav-hamburger {
+  position: fixed;
+  top: 44px;
+  left: min(75vw, 320px);
+  transform: translateX(-100%);
+}
+
 header .nav-hamburger button {
   border: none;
   background: transparent;
