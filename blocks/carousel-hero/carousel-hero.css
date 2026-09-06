@@ -201,6 +201,11 @@ main .carousel-hero .carousel-hero-slide-content a.button:any-link {
 
 /* --- desktop (>= 1200px): full-bleed image + overlapping white content bar --- */
 @media (width >= 1200px) {
+  .carousel-hero {
+    /* 640px image; content card overlaps by -180px so total ≈ image height */
+    min-height: 640px;
+  }
+
   .carousel-hero .carousel-hero-slide-image {
     height: 640px;
   }
