@@ -380,6 +380,47 @@ main .section > div > h3 {
   display: table;
 }
 
+/* Breadcrumb — horizontal, unmarked, uppercase (not a numbered list).
+   Items separated by a slash; the last item is the current (non-link) page. */
+main ol.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--body-font-size-xs);
+  text-transform: uppercase;
+}
+
+main ol.breadcrumb > li {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  color: var(--text-color);
+}
+
+main ol.breadcrumb > li:not(:last-child)::after {
+  content: '/';
+  margin-left: 8px;
+  color: rgb(105 105 105);
+}
+
+main ol.breadcrumb :where(a:any-link) {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+main ol.breadcrumb :where(a:hover, a:focus) {
+  text-decoration: underline;
+}
+
+/* current page (trailing, non-link item) */
+main ol.breadcrumb > li:last-child {
+  color: rgb(105 105 105);
+}
+
 /* WKND standalone default-content CTAs ("All Articles", "All Trips", …) render
    as solid yellow square buttons — matching the block CTAs (View Trips / See
    Trip). Override the plain-link reset above. */

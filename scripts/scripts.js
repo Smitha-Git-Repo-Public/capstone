@@ -363,6 +363,31 @@ function decorateHeadingOrder(root) {
   });
 }
 
+/**
+ * Detect the leading breadcrumb list (a short <ol> near the top of the page
+ * whose items are links plus a trailing current-page label) and tag it so CSS
+ * can render it as a proper horizontal breadcrumb instead of a numbered list.
+ * @param {Element} main
+ */
+function decorateBreadcrumb(main) {
+  const sections = [...main.children];
+  main.querySelectorAll('ol').forEach((ol) => {
+    if (ol.classList.contains('breadcrumb')) return;
+    const items = [...ol.children];
+    // Breadcrumb heuristic: a short list (2–5 items) whose first item is a link,
+    // sitting in one of the first two top-level sections (not a mid-article
+    // ordered list).
+    const section = ol.closest('main > div');
+    const isEarly = section && sections.indexOf(section) <= 1;
+    const looksLikeCrumb = items.length >= 2 && items.length <= 5
+      && items[0].querySelector('a');
+    if (isEarly && looksLikeCrumb) {
+      ol.classList.add('breadcrumb');
+      ol.closest('.default-content-wrapper')?.classList.add('breadcrumb-wrapper');
+    }
+  });
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
   decorateIcons(main);
@@ -371,6 +396,7 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
+  decorateBreadcrumb(main);
   // Tag <body> with the template so template CSS applies from first paint.
   // The two-column DOM regrouping itself is deferred until after loadSections
   // (see loadLazy) so blocks still decorate inside their original sections.
