@@ -16,6 +16,25 @@ export default function decorate(block) {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     img.closest('picture').replaceWith(optimizedPic);
   });
+
+  // Make the whole card clickable (matches the WKND source, where the image is
+  // linked too). Only the title text was a link, so the large image — the
+  // natural click target — did nothing. Wrap each card's image in an anchor to
+  // the same destination as its title link. Hidden from the a11y tree so it
+  // doesn't duplicate the title link for screen readers / keyboard.
+  ul.querySelectorAll(':scope > li').forEach((li) => {
+    const titleLink = li.querySelector('.cards-article-card-body a[href]');
+    const picture = li.querySelector('.cards-article-card-image picture');
+    if (!titleLink || !picture || picture.closest('a')) return;
+    const imageLink = document.createElement('a');
+    imageLink.href = titleLink.getAttribute('href');
+    imageLink.className = 'cards-article-card-image-link';
+    imageLink.tabIndex = -1;
+    imageLink.setAttribute('aria-hidden', 'true');
+    picture.replaceWith(imageLink);
+    imageLink.append(picture);
+  });
+
   block.textContent = '';
   block.append(ul);
 }

@@ -23,6 +23,12 @@
   line-height: 0;
 }
 
+/* The image is wrapped in a link so the whole card image is clickable. */
+.cards-article .cards-article-card-image-link {
+  display: block;
+  cursor: pointer;
+}
+
 .cards-article .cards-article-card-image img {
   width: 100%;
   aspect-ratio: 13 / 10;
