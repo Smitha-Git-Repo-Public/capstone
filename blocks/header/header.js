@@ -102,15 +102,20 @@ export default async function decorate(block) {
         const locale = document.createElement('div');
         locale.className = 'nav-locale';
 
-        const label = a.textContent.trim();
+        // The language code (e.g. "en-US") is authored as a text node in the
+        // parent <p>, alongside the flag <img> — not inside the <a>. Read the
+        // whole paragraph so the label isn't empty.
+        const label = (a.closest('p')?.textContent || a.textContent).trim();
         const toggle = document.createElement('button');
         toggle.type = 'button';
         toggle.className = 'nav-locale-toggle';
         toggle.setAttribute('aria-expanded', 'false');
         toggle.setAttribute('aria-haspopup', 'true');
         toggle.setAttribute('aria-label', `Toggle Language ${label}`);
-        toggle.style.backgroundImage = `url('${img.getAttribute('src')}')`;
-        toggle.innerHTML = `<span class="nav-locale-label">${label}</span><span class="nav-locale-chevron" aria-hidden="true"></span>`;
+        // Render the flag as an inline image (properly aligned) + code + chevron.
+        toggle.innerHTML = `<img class="nav-locale-flag" src="${img.getAttribute('src')}" alt="" width="25" height="25">`
+          + `<span class="nav-locale-label">${label}</span>`
+          + '<span class="nav-locale-chevron" aria-hidden="true"></span>';
 
         const dropdown = localeList.cloneNode(true);
         dropdown.className = 'nav-locale-dropdown';

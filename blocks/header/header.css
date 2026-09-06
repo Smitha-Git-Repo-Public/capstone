@@ -73,14 +73,25 @@ header .nav-locale-toggle {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 0 0 0 35px;
+  height: 40px;
+  padding: 0;
   border: none;
   background-color: transparent;
-  background-repeat: no-repeat;
-  background-size: 25px;
-  background-position: 0 center;
+  color: var(--wknd-light-text);
   font-family: inherit;
+  font-size: 14px;
+  text-transform: uppercase;
+  line-height: 1;
   cursor: pointer;
+}
+
+/* Flag image sits inline, vertically centred with the code + chevron */
+header .nav-locale-flag {
+  display: block;
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  flex: none;
 }
 
 /* toggle chevron (points down; flips up when open) */
@@ -89,12 +100,12 @@ header .nav-locale-chevron {
   height: 8px;
   border-right: 2px solid var(--wknd-light-text);
   border-bottom: 2px solid var(--wknd-light-text);
-  transform: translateY(-2px) rotate(45deg);
+  transform: rotate(45deg);
   transition: transform 0.2s ease;
 }
 
 header .nav-locale-toggle[aria-expanded='true'] .nav-locale-chevron {
-  transform: translateY(2px) rotate(-135deg);
+  transform: rotate(-135deg);
 }
 
 /* dropdown panel — dark, one row per country (flag + name + language links) */
