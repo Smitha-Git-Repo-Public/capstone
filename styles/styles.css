@@ -447,6 +447,38 @@ body.template-magazine-article main blockquote {
   text-align: left;
 }
 
+/* Author bio: small circular avatar (60px) floated left with the name/role
+   and social links stacked to its right — matching the source .cmp-byline. */
+body.template-magazine-article main .article-byline {
+  overflow: hidden;
+}
+
+body.template-magazine-article main .article-byline > p:first-child {
+  float: left;
+  width: 60px;
+  margin: 7px 25px 7px 0;
+}
+
+body.template-magazine-article main .article-byline > p:first-child :where(picture, img) {
+  display: block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+body.template-magazine-article main .article-byline h2 {
+  margin: 0 0 4px;
+  font-size: var(--heading-font-size-l);
+  border-bottom: none;
+  padding-bottom: 0;
+  display: block;
+}
+
+body.template-magazine-article main .article-byline > p:not(:first-child) {
+  margin: 0;
+}
+
 /* ==========================================================================
    Template: adventure-detail — details sidebar (left) + tabs/overview (right).
    ========================================================================== */

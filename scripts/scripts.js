@@ -248,6 +248,14 @@ function decorateTemplateLayout(main, template) {
     colWrap.className = 'article-column';
     column[0].before(colWrap);
     column.forEach((s) => colWrap.append(s));
+    // Tag the author-bio block (a default-content wrapper that leads with an
+    // image/picture and an h2 name) so CSS can render the source's small
+    // circular avatar floated beside the name/role, not a full-width photo.
+    colWrap.querySelectorAll('.default-content-wrapper').forEach((w) => {
+      const first = w.firstElementChild;
+      const hasAvatar = first && (first.querySelector?.('picture, img'));
+      if (hasAvatar && w.querySelector('h2')) w.classList.add('article-byline');
+    });
     groupSections(main, [colWrap, share], 'article-layout');
   } else if (template === 'adventure-detail') {
     // The carousel + H1 stay full-width; below them the trip details block
