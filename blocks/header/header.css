@@ -114,33 +114,36 @@ header .nav-locale-dropdown {
   top: 40px;
   right: 0;
   z-index: 10;
-  width: 300px;
+  width: 280px;
+  max-height: calc(100vh - 48px);
   margin: 0;
   padding: 0;
   background-color: var(--wknd-dark);
   box-shadow: 0 4px 12px rgb(0 0 0 / 40%);
   list-style: none;
   text-transform: none;
+  overflow-y: auto;
 }
 
 header .nav-locale-dropdown[hidden] {
   display: none;
 }
 
-/* each country row: flag on the left, name + language links stacked right */
+/* each country row: flag on the left, name + language links stacked right.
+   Kept compact so all countries fit without the panel spanning the screen. */
 header .nav-locale-dropdown > li {
   display: grid;
-  grid-template-columns: 40px 1fr;
+  grid-template-columns: 28px 1fr;
   align-items: center;
-  gap: 0 16px;
+  gap: 0 12px;
   margin: 0;
-  padding: 16px 24px;
+  padding: 8px 20px;
   border-bottom: 1px solid rgb(255 255 255 / 12%);
   color: var(--wknd-light-text);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
 header .nav-locale-dropdown > li:where(:last-child) {
@@ -149,7 +152,7 @@ header .nav-locale-dropdown > li:where(:last-child) {
 
 header .nav-locale-dropdown > li > :where(img) {
   grid-row: 1 / span 2;
-  width: 32px;
+  width: 24px;
   height: auto;
 }
 
@@ -158,7 +161,7 @@ header .nav-locale-dropdown ul {
   grid-column: 2;
   display: flex;
   flex-wrap: wrap;
-  margin: 4px 0 0;
+  margin: 2px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -175,7 +178,7 @@ header .nav-locale-dropdown ul li:not(:last-child)::after {
 
 header .nav-locale-dropdown ul a {
   color: var(--wknd-light-text);
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 400;
   text-decoration: none;
 }
