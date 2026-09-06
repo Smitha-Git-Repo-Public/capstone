@@ -174,6 +174,37 @@ export default async function decorate(block) {
         dropdown.className = 'nav-locale-dropdown';
         dropdown.hidden = true;
 
+        // Normalize each country row to a predictable structure so CSS can lay
+        // it out reliably: a small flag, the country name, and the language
+        // links. Authored markup mixes the flag <picture> and the country name
+        // text inside a single <p>, which breaks a grid built for a bare <img>.
+        dropdown.querySelectorAll(':scope > li').forEach((row) => {
+          const flagImg = row.querySelector('img');
+          const links = row.querySelector('ul');
+          // Country name = the row's text minus the language-link text.
+          const linkText = links ? links.textContent : '';
+          let name = row.textContent.replace(linkText, '').trim();
+          name = name.replace(/\s+/g, ' ');
+
+          const flag = document.createElement('img');
+          flag.className = 'nav-locale-flag';
+          if (flagImg) {
+            flag.src = flagImg.getAttribute('src');
+            flag.width = 24;
+            flag.height = 24;
+          }
+          flag.alt = '';
+
+          const country = document.createElement('span');
+          country.className = 'nav-locale-country';
+          country.textContent = name;
+
+          row.textContent = '';
+          if (flagImg) row.append(flag);
+          row.append(country);
+          if (links) row.append(links);
+        });
+
         // Mark the active language link (matches the current toggle label).
         const activeCode = label.toLowerCase();
         dropdown.querySelectorAll('a').forEach((link) => {
