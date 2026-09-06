@@ -124,7 +124,24 @@ function decorateButtons(main) {
     // require authored formatting for buttonization
     const strong = a.closest('strong');
     const em = a.closest('em');
-    if (!strong && !em) return;
+    if (!strong && !em) {
+      // No authored bold/italic. WKND authors standalone CTAs (e.g. "All
+      // Articles" / "All Trips") as plain links that render as yellow buttons.
+      // Buttonize an isolated lone-link paragraph in default content only —
+      // skip block-scoped CTAs (heroes style their own) and grouped lone-link
+      // paragraphs (e.g. the author's stacked Facebook/Twitter/Instagram links).
+      const inDefault = p.closest('.default-content-wrapper');
+      const isLoneLinkP = (el) => el && el.tagName === 'P'
+        && el.children.length === 1 && el.firstElementChild.tagName === 'A'
+        && el.textContent.trim() === el.firstElementChild.textContent.trim();
+      const grouped = isLoneLinkP(p.previousElementSibling)
+        || isLoneLinkP(p.nextElementSibling);
+      if (inDefault && !grouped) {
+        p.className = 'button-wrapper';
+        a.className = 'button cta';
+      }
+      return;
+    }
 
     p.className = 'button-wrapper';
     a.className = 'button';
@@ -174,6 +191,117 @@ function decorateSectionMetadata(main) {
   });
 }
 
+/**
+ * Detect the page template from its URL path (locale-agnostic) and tag <body>
+ * so template-specific layouts (e.g. the two-column article/adventure detail
+ * pages) can be scoped in CSS. Listing pages (…/magazine, …/adventures) have no
+ * trailing detail segment and are intentionally excluded.
+ * @returns {string} the template name, or '' if none
+ */
+function detectTemplate() {
+  const path = window.location.pathname.replace(/\.html$/, '').replace(/\/$/, '');
+  if (/\/magazine\/[^/]+/.test(path)) return 'magazine-article';
+  if (/\/adventures\/[^/]+/.test(path)) return 'adventure-detail';
+  if (/\/faqs$/.test(path)) return 'faqs';
+  return '';
+}
+
+/**
+ * Wrap a run of sibling sections in a grid container so a template can present
+ * them side by side (main content + right sidebar) on desktop.
+ * @param {Element} main
+ * @param {Element[]} sections sections to move into the wrapper (in order)
+ * @param {string} className wrapper class
+ */
+function groupSections(main, sections, className) {
+  if (!sections.length) return;
+  const wrapper = document.createElement('div');
+  wrapper.className = className;
+  sections[0].before(wrapper);
+  sections.forEach((s) => wrapper.append(s));
+}
+
+/**
+ * Template-specific desktop layouts. WKND renders article and adventure detail
+ * pages as two columns: the main content on the left and a narrow sidebar
+ * ("Share This Story" / adventure details) on the right. Content-first EDS
+ * emits these as stacked sections; here we group them so CSS can lay them out.
+ * @param {Element} main
+ * @param {string} template
+ */
+function decorateTemplateLayout(main, template) {
+  const sections = [...main.querySelectorAll(':scope > .section')];
+  const headingText = (s) => (s.querySelector('h1,h2,h3,h4,h5,h6')?.textContent || '').trim().toLowerCase();
+
+  if (template === 'magazine-article') {
+    // Right sidebar = the "Share This Story" section; everything between the
+    // breadcrumb and that section is the article column.
+    const share = sections.find((s) => headingText(s).startsWith('share this'));
+    if (!share) return;
+    const shareIdx = sections.indexOf(share);
+    // article column starts after the lead image + breadcrumb (first 2 sections
+    // when present); fall back to everything before the share section.
+    const start = Math.min(2, shareIdx);
+    const column = sections.slice(start, shareIdx);
+    if (!column.length) return;
+    const colWrap = document.createElement('div');
+    colWrap.className = 'article-column';
+    column[0].before(colWrap);
+    column.forEach((s) => colWrap.append(s));
+    groupSections(main, [colWrap, share], 'article-layout');
+  } else if (template === 'adventure-detail') {
+    // The carousel + H1 stay full-width; below them the trip details block
+    // (left sidebar) sits beside the tabs/overview (right column). The details
+    // block and the "Share this Adventure" heading live in the first section,
+    // while the tabs are in the next section — so build a grid and move the
+    // details block + its wrapper into the left column and the tabs into right.
+    const detailsWrap = main.querySelector('.columns-details-wrapper')
+      || main.querySelector('.columns-details')?.closest(':scope > .section > div');
+    const tabsSec = sections.find((s) => s.querySelector('.tabs-content'));
+    const detailsBlock = main.querySelector('.columns-details');
+    if (detailsWrap && tabsSec && detailsBlock) {
+      const grid = document.createElement('div');
+      grid.className = 'adventure-layout';
+      const left = document.createElement('div');
+      left.className = 'adventure-details-col';
+      const right = document.createElement('div');
+      right.className = 'adventure-main-col';
+      // insert the grid right before the details wrapper's position
+      detailsWrap.before(grid);
+      // left column: the details block (+ the "Share this Adventure" heading,
+      // which lives elsewhere in the same section as its own default-content
+      // wrapper — move the heading itself into the left column).
+      const shareHeading = [...main.querySelectorAll('h5')]
+        .find((h) => /share this/i.test(h.textContent || ''));
+      left.append(detailsBlock);
+      if (shareHeading) left.append(shareHeading);
+      // right column: the whole tabs section content
+      right.append(tabsSec);
+      grid.append(left, right);
+    }
+  } else if (template === 'faqs') {
+    // Left column = intro (h1 + image + copy) + the accordion; right sidebar =
+    // the "Need more help?" default-content block.
+    const accordionWrap = main.querySelector('.accordion-faq-wrapper');
+    const helpWrap = [...main.querySelectorAll('.default-content-wrapper')]
+      .find((w) => /need more help/i.test(w.textContent || ''));
+    if (accordionWrap && helpWrap) {
+      const introSec = sections[0];
+      const grid = document.createElement('div');
+      grid.className = 'faqs-layout';
+      const left = document.createElement('div');
+      left.className = 'faqs-main-col';
+      const right = document.createElement('div');
+      right.className = 'faqs-help-col';
+      (introSec || accordionWrap.closest('.section')).before(grid);
+      if (introSec) left.append(...introSec.querySelectorAll(':scope > div'));
+      left.append(accordionWrap);
+      right.append(helpWrap);
+      grid.append(left, right);
+    }
+  }
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
   decorateIcons(main);
@@ -182,6 +310,11 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
+  const template = detectTemplate();
+  if (template) {
+    document.body.classList.add(`template-${template}`);
+    decorateTemplateLayout(main, template);
+  }
 }
 
 /**
