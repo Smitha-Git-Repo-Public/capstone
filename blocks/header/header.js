@@ -41,7 +41,11 @@ function toggleMenu(nav, expanded) {
   const open = expanded ?? nav.getAttribute('aria-expanded') !== 'true';
   nav.setAttribute('aria-expanded', open ? 'true' : 'false');
   document.body.style.overflowY = open && !isDesktop.matches ? 'hidden' : '';
-  if (button) button.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+  if (button) {
+    // Expose the open/closed state on the control itself for assistive tech.
+    button.setAttribute('aria-expanded', open ? 'true' : 'false');
+    button.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+  }
 }
 
 /** Build the search control (structure lives in JS per the nav contract). */
@@ -158,7 +162,7 @@ export default async function decorate(block) {
   // Hamburger (mobile)
   const hamburger = document.createElement('div');
   hamburger.className = 'nav-hamburger';
-  hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
+  hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-expanded="false" aria-label="Open navigation">
       <span class="nav-hamburger-icon"></span>
     </button>`;
   hamburger.addEventListener('click', () => toggleMenu(nav));
@@ -189,7 +193,10 @@ export default async function decorate(block) {
     nav.setAttribute('aria-expanded', isDesktop.matches ? 'true' : 'false');
     document.body.style.overflowY = '';
     const button = nav.querySelector('.nav-hamburger button');
-    if (button) button.setAttribute('aria-label', 'Open navigation');
+    if (button) {
+      button.setAttribute('aria-expanded', 'false');
+      button.setAttribute('aria-label', 'Open navigation');
+    }
   });
 
   // Close the locale dropdown when clicking outside it.
