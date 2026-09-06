@@ -310,11 +310,11 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
+  // Tag <body> with the template so template CSS applies from first paint.
+  // The two-column DOM regrouping itself is deferred until after loadSections
+  // (see loadLazy) so blocks still decorate inside their original sections.
   const template = detectTemplate();
-  if (template) {
-    document.body.classList.add(`template-${template}`);
-    decorateTemplateLayout(main, template);
-  }
+  if (template) document.body.classList.add(`template-${template}`);
 }
 
 /**
@@ -350,6 +350,12 @@ async function loadLazy(doc) {
 
   const main = doc.querySelector('main');
   await loadSections(main);
+
+  // Regroup sections into template-specific two-column layouts only after all
+  // blocks have loaded, so moving a block's wrapper never strands it as
+  // "initialized" (which would skip its decoration, e.g. the FAQ accordion).
+  const template = detectTemplate();
+  if (template) decorateTemplateLayout(main, template);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
