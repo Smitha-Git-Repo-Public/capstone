@@ -202,6 +202,11 @@ header .nav-brand img {
 /* Hamburger (mobile only) */
 header .nav-hamburger {
   order: -1;
+
+  /* Keep the hamburger/close toggle above the slide-in drawer (z-index:20) so
+     the morphed ✕ stays tappable to close the menu. */
+  position: relative;
+  z-index: 30;
 }
 
 header .nav-hamburger button {
@@ -233,9 +238,15 @@ header .nav-hamburger-icon::after {
   top: 6px;
 }
 
-/* Hamburger morphs to a cross when the nav is open (mobile) */
+/* Hamburger morphs to a cross when the nav is open (mobile). The ✕ overlays the
+   dark drawer, so its bars switch to the light drawer text color to stay visible. */
 header nav[aria-expanded='true'] .nav-hamburger-icon {
   background: transparent;
+}
+
+header nav[aria-expanded='true'] .nav-hamburger-icon::before,
+header nav[aria-expanded='true'] .nav-hamburger-icon::after {
+  background: var(--wknd-light-text);
 }
 
 header nav[aria-expanded='true'] .nav-hamburger-icon::before {
