@@ -1,9 +1,13 @@
 /* hero-intro: full-bleed landscape image with an overlapping white text panel */
 
-/* Source: wknd.site teaser hero -- image 2:1 cover, white panel overlaps lower image */
+/* Source: wknd.site teaser hero (--hero variant).
+   Breakpoints match source: single switch at 1165px -> use 1200px.
+   Below 1200: image stacked above text (16:9 cover), no panel.
+   At/above 1200: fixed 640px full-bleed image, white text panel overlaps by 180px. */
 
-/* full-bleed: cancel the section wrapper max-width/padding so the image runs edge to edge */
-.hero-intro-container .hero-intro-wrapper {
+/* full-bleed: break the block wrapper out of the section max-width/padding.
+   Specificity must beat global `main > .section > div` (0,1,2). */
+main .section.hero-intro-container > .hero-intro-wrapper {
   max-width: none;
   padding: 0;
 }
@@ -12,7 +16,7 @@
   display: block;
 }
 
-/* image row -- full-bleed 2:1 cover image */
+/* image row -- full-bleed 16:9 cover image (mobile + tablet) */
 .hero-intro > div:first-child {
   margin: 0;
 }
@@ -25,20 +29,15 @@
 .hero-intro > div:first-child img {
   display: block;
   width: 100%;
-  aspect-ratio: 2 / 1;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
-  object-position: 50% 50%;
+  object-position: center center;
 }
 
-/* text row -- white panel that overlaps the lower part of the image */
+/* text row -- plain block below the image on mobile/tablet */
 .hero-intro > div:last-child {
-  position: relative;
-  z-index: 1;
   box-sizing: border-box;
-  max-width: 1200px;
-  margin: -48px auto 0;
-  padding: 8px 28px 24px;
-  background-color: var(--background-color);
+  padding: 0 14px;
   color: var(--text-color);
   text-align: left;
 }
@@ -47,16 +46,17 @@
   padding: 0;
 }
 
-/* title -- Asar serif, 36px desktop scale (brand xl) */
+/* title -- Asar serif, constant 36px/54px (source does not scale it down on mobile) */
 .hero-intro h2 {
   margin: 18px 0 0;
   color: var(--text-color);
-  line-height: 1.5;
+  font-size: 36px;
+  line-height: 54px;
 }
 
-/* description -- Source Sans Pro, 18px/1.75 (brand body-m) */
+/* description -- Source Sans Pro, 18px/1.75, flush under the title */
 .hero-intro p {
-  margin: 8px 0 0;
+  margin: 0;
   color: var(--text-color);
   font-size: var(--body-font-size-m);
   line-height: 1.75;
@@ -67,9 +67,21 @@
   margin-top: 0;
 }
 
-@media (width >= 900px) {
+@media (width >= 1200px) {
+  /* fixed-height full-bleed image, cropped */
+  .hero-intro > div:first-child img {
+    aspect-ratio: auto;
+    height: 640px;
+  }
+
+  /* white panel: 1136px centered, overlapping the lower part of the image */
   .hero-intro > div:last-child {
-    margin-top: -160px;
-    padding: 24px 44px 32px;
+    position: relative;
+    width: 1136px;
+    max-width: 100%;
+    min-height: 180px;
+    margin: -180px auto 0;
+    padding: 0 28px;
+    background-color: var(--background-color);
   }
 }

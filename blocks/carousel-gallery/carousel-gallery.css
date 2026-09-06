@@ -65,14 +65,21 @@
   display: none;
 }
 
-/* Dot indicators: centered row of 10px dark circles below the image
-   (source: transparent bar, margin-top 9px, dots rgb(0 0 0 / 80%), margin 0 7px) */
+/* Control bar below the image. Source: dots centered in the bar, prev/next
+   arrows floated to the right edge (cmp-carousel__actions float: right). */
+.carousel-gallery .carousel-gallery-controls {
+  position: relative;
+  margin-top: 7px; /* source cmp-image__image margin-bottom below the slide */
+}
+
+/* Dot indicators: centered row of 10px dots below the image
+   (source margin: 0.5em 0 0, inactive rgb(175 175 175), active rgb(0 0 0 / 80%)) */
 .carousel-gallery .carousel-gallery-slide-indicators {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 0;
-  margin: 9px 0 0;
+  margin: 0.5em 0 0;
   padding: 0;
   background-color: transparent;
   line-height: 0;
@@ -89,7 +96,7 @@
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background-color: rgb(0 0 0 / 40%);
+  background-color: rgb(175 175 175); /* source inactive dot color */
   cursor: pointer;
   transition: background-color 0.2s;
 }
@@ -100,46 +107,34 @@
   background-color: rgb(0 0 0 / 80%); /* source active/hover dot color */
 }
 
-/* Prev/next controls: subtle dark arrows overlaid on the image edges */
+/* Prev/next arrows: plain dark chevrons floated right (no button chrome),
+   matching source cmp-carousel__actions / cmp-carousel__action. */
 .carousel-gallery .carousel-gallery-navigation-buttons {
-  position: absolute;
-  top: 200px; /* vertical center of the 400px image */
-  transform: translateY(-50%);
-  left: 12px;
-  right: 12px;
+  float: right;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  z-index: 1;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 .carousel-gallery .carousel-gallery-navigation-buttons button {
   position: relative;
-  width: 40px;
-  height: 40px;
-  margin: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0 1em 0 0; /* source cmp-carousel__action margin-right: 1em (gap between arrows and from right edge) */
   padding: 0;
   border: 0;
-  border-radius: 50%;
-  background-color: rgb(255 255 255 / 70%);
+  background: none;
   cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.carousel-gallery .carousel-gallery-navigation-buttons button:hover,
-.carousel-gallery .carousel-gallery-navigation-buttons button:focus-visible {
-  background-color: rgb(255 255 255 / 95%);
 }
 
 .carousel-gallery .carousel-gallery-navigation-buttons button::after {
   display: block;
   content: '';
-  border: 2px solid rgb(0 0 0 / 80%); /* dark arrow glyph, matches source */
+  border: 2px solid rgb(0 0 0); /* source arrow glyph color: black */
   border-bottom: 0;
   border-left: 0;
-  height: 10px;
-  width: 10px;
+  height: 8px;
+  width: 8px;
   position: absolute;
   top: 50%;
   left: calc(50% + 2px);
@@ -149,11 +144,4 @@
 .carousel-gallery .carousel-gallery-navigation-buttons button.slide-next::after {
   transform: translate(-50%, -50%) rotate(45deg);
   left: calc(50% - 2px);
-}
-
-@media (width >= 600px) {
-  .carousel-gallery .carousel-gallery-navigation-buttons {
-    left: 24px;
-    right: 24px;
-  }
 }

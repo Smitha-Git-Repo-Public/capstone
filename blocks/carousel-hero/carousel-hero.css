@@ -1,7 +1,12 @@
-/* Block: carousel-hero — WKND full-bleed hero carousel.
- * Values extracted from https://wknd.site/us/en.html computed styles.
- * Design: full-bleed background image + white content card with dark text,
- * yellow uppercase CTA. Mobile stacks image over content; desktop overlays.
+/* Block: carousel-hero — WKND hero carousel.
+ * Values extracted from https://wknd.site/us/en.html computed styles + stylesheet rules.
+ * Source design (AEM core-component "cmp-teaser--hero"):
+ *   - Below 1165px: image stacked on top (400px / 25pc cover), content below
+ *     (transparent card, 14px side padding). Dots left-aligned on phones,
+ *     centered on tablets. Arrows are plain dark chevrons at bottom-right.
+ *   - >= 1165px: full-bleed image (640px / 40pc), a wide centered white content
+ *     bar overlapping the image bottom by -180px.
+ * Task breakpoints (min-width): 600 (center dots), 1200 (desktop overlay).
  */
 
 /* full-bleed: override section content max-width wrapper */
@@ -10,8 +15,12 @@
   padding: 0 !important;
 }
 
-.carousel-hero .carousel-hero-slides-container {
+.carousel-hero {
   position: relative;
+}
+
+.carousel-hero .carousel-hero-slides-container {
+  position: static;
 }
 
 .carousel-hero .carousel-hero-slides,
@@ -41,28 +50,33 @@
   width: 100%;
 }
 
-/* --- image --- */
+/* --- image (stacked, fixed-height cover on mobile + tablet) --- */
 .carousel-hero .carousel-hero-slide-image {
   width: 100%;
+  height: 400px;
+  overflow: hidden;
   line-height: 0;
 }
 
 .carousel-hero .carousel-hero-slide-image picture {
   display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .carousel-hero .carousel-hero-slide-image img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
+  object-position: center center;
 }
 
 /* --- content card --- */
 .carousel-hero .carousel-hero-slide-content {
-  background-color: var(--background-color);
+  background-color: transparent;
   color: var(--text-color);
-  padding: 8px 14px 24px;
+  padding: 0 14px;
 }
 
 .carousel-hero .carousel-hero-slide-content h2 {
@@ -74,7 +88,7 @@
 }
 
 .carousel-hero .carousel-hero-slide-content p {
-  margin: 0.5em 0 0;
+  margin: 0;
   font-size: 18px;
   line-height: 31.5px;
   color: var(--text-color);
@@ -83,7 +97,7 @@
 /* --- CTA: yellow uppercase button (override global plain-link reset) --- */
 .carousel-hero .carousel-hero-slide-content .button-container {
   display: block;
-  margin-top: 20px;
+  margin: 14px 0;
 }
 
 main .carousel-hero .carousel-hero-slide-content a:any-link,
@@ -107,9 +121,12 @@ main .carousel-hero .carousel-hero-slide-content a.button:any-link {
 .carousel-hero .carousel-hero-slide-indicators {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  align-items: center;
+  justify-content: flex-start;
   gap: 14px;
-  padding: 14px 0;
+  min-height: 30px;
+  margin: 0;
+  padding: 14px 0 0 14px;
   background-color: transparent;
   line-height: 0;
 }
@@ -121,7 +138,7 @@ main .carousel-hero .carousel-hero-slide-content a.button:any-link {
   padding: 0;
   border: none;
   border-radius: 50%;
-  background-color: rgb(0 0 0 / 25%);
+  background-color: rgb(175 175 175);
   transition: background-color 0.2s;
   cursor: pointer;
 }
@@ -132,39 +149,27 @@ main .carousel-hero .carousel-hero-slide-content a.button:any-link {
   background-color: rgb(0 0 0 / 80%);
 }
 
-/* --- navigation arrows --- */
+/* --- navigation arrows: plain dark chevrons, bottom-right strip --- */
 .carousel-hero .carousel-hero-navigation-buttons {
   position: absolute;
-
-  /* mobile: image stacks above content, so center arrows over the image
-     (image is full-width ~9/16, so its vertical center is ~28vw) */
-  top: 28vw;
-  left: 12px;
-  right: 12px;
-  transform: translateY(-50%);
+  right: 14px;
+  bottom: 6px;
+  z-index: 1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  z-index: 1;
+  gap: 16px;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 .carousel-hero .carousel-hero-navigation-buttons button {
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 24px;
+  height: 24px;
   margin: 0;
   padding: 0;
   border: none;
-  border-radius: 50%;
-  background-color: rgb(19 19 19 / 25%);
-  transition: background-color 0.2s;
+  background-color: transparent;
   cursor: pointer;
-}
-
-.carousel-hero .carousel-hero-navigation-buttons button:hover,
-.carousel-hero .carousel-hero-navigation-buttons button:focus-visible {
-  background-color: rgb(19 19 19 / 60%);
 }
 
 .carousel-hero .carousel-hero-navigation-buttons button::after {
@@ -173,9 +178,9 @@ main .carousel-hero .carousel-hero-slide-content a.button:any-link {
   position: absolute;
   top: 50%;
   left: calc(50% + 2px);
-  width: 12px;
-  height: 12px;
-  border: 2px solid #fff;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--text-color);
   border-bottom: 0;
   border-left: 0;
   transform: translate(-50%, -50%) rotate(-135deg);
@@ -186,38 +191,29 @@ main .carousel-hero .carousel-hero-slide-content a.button:any-link {
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
-/* --- desktop: full-bleed image with white content card overlay --- */
-@media (width >= 900px) {
-  .carousel-hero .carousel-hero-slide {
-    align-items: flex-start;
+/* --- tablet (>= 600px): dots centered --- */
+@media (width >= 600px) {
+  .carousel-hero .carousel-hero-slide-indicators {
     justify-content: center;
-    min-height: min(50vw, calc(100dvh - var(--nav-height, 64px)));
+    padding: 14px 0 0;
   }
+}
 
-  .carousel-hero .carousel-hero-slide-image,
-  .carousel-hero .carousel-hero-slide-image picture {
-    position: absolute;
-    inset: 0;
-  }
-
-  .carousel-hero .carousel-hero-slide-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+/* --- desktop (>= 1200px): full-bleed image + overlapping white content bar --- */
+@media (width >= 1200px) {
+  .carousel-hero .carousel-hero-slide-image {
+    height: 640px;
   }
 
   .carousel-hero .carousel-hero-slide-content {
     position: relative;
     z-index: 1;
-    width: 540px;
-    max-width: calc(100% - 88px);
-    margin-left: clamp(24px, 7vw, 132px);
-    padding: 24px 40px 32px;
-  }
-
-  .carousel-hero .carousel-hero-navigation-buttons {
-    top: 50%;
-    left: 24px;
-    right: 24px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1192px;
+    min-height: 180px;
+    margin: -180px auto 0;
+    padding: 0 28px;
+    background-color: var(--background-color);
   }
 }

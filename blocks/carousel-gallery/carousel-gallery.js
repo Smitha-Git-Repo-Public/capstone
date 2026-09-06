@@ -95,7 +95,9 @@ export default async function decorate(block) {
   carouselId += 1;
   block.setAttribute('id', `carousel-gallery-${carouselId}`);
   const rows = block.querySelectorAll(':scope > div');
-  const isSingleSlide = rows.length < 2;
+  // Source WKND mini carousel renders slide controls (arrows + indicator dots)
+  // in a bar below the image even for a single slide, so always build them.
+  const isSingleSlide = false;
 
   block.setAttribute('role', 'region');
   block.setAttribute('aria-roledescription', 'Carousel');
@@ -111,19 +113,22 @@ export default async function decorate(block) {
   if (!isSingleSlide) {
     const slideIndicatorsNav = document.createElement('nav');
     slideIndicatorsNav.setAttribute('aria-label', 'Carousel Slide Controls');
+    slideIndicatorsNav.classList.add('carousel-gallery-controls');
+
+    // Prev/next arrows live in the control bar below the image (float right),
+    // matching the WKND source cmp-carousel__actions placement.
+    const slideNavButtons = document.createElement('div');
+    slideNavButtons.classList.add('carousel-gallery-navigation-buttons');
+    slideNavButtons.innerHTML = `
+      <button type="button" class="slide-prev" aria-label="Previous Slide"></button>
+      <button type="button" class="slide-next" aria-label="Next Slide"></button>
+    `;
+    slideIndicatorsNav.append(slideNavButtons);
+
     slideIndicators = document.createElement('ol');
     slideIndicators.classList.add('carousel-gallery-slide-indicators');
     slideIndicatorsNav.append(slideIndicators);
     block.append(slideIndicatorsNav);
-
-    const slideNavButtons = document.createElement('div');
-    slideNavButtons.classList.add('carousel-gallery-navigation-buttons');
-    slideNavButtons.innerHTML = `
-      <button type="button" class= "slide-prev" aria-label="Previous Slide"></button>
-      <button type="button" class="slide-next" aria-label="Next Slide"></button>
-    `;
-
-    container.append(slideNavButtons);
   }
 
   rows.forEach((row, idx) => {

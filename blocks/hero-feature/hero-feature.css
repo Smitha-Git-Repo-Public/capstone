@@ -1,6 +1,12 @@
-/* Block: hero-feature — full-bleed feature banner (image + overlapping content card) */
+/* Block: hero-feature — full-bleed feature banner (image + content card).
+   Values extracted from source computed styles
+   (wknd.site .cmp-teaser--hero.cmp-teaser--imagebottom, "Climbing New Zealand").
 
-/* Values extracted from source computed styles (wknd.site cmp-teaser--hero imagebottom). */
+   Responsive model (matches source):
+   - < 1200px: image at natural aspect ratio (full width, height auto);
+     content stacked below, transparent, padding 0 14px.
+   - >= 1200px: image fixed 640px (cover); content becomes a centered white
+     card (max 1192px) overlapping the image bottom by 180px. */
 
 /* Full-bleed: cancel section max-width/padding for this block's wrapper */
 .hero-feature-container .hero-feature-wrapper {
@@ -13,22 +19,17 @@
   position: relative;
 }
 
-/* --- Image row (full-bleed) --- */
-.hero-feature > div:first-child {
+/* Rows / cells: strip default margins (cells first, lower specificity) */
+.hero-feature > div > div {
   margin: 0;
 }
 
-/* --- Text row (below image on mobile, transparent) --- */
+.hero-feature > div:first-child,
 .hero-feature > div:last-child {
   margin: 0;
-  padding: 0 14px;
 }
 
-.hero-feature > div:first-child > div,
-.hero-feature > div:last-child > div {
-  margin: 0;
-}
-
+/* --- Image (full-bleed, natural aspect ratio below desktop) --- */
 .hero-feature picture {
   display: block;
 }
@@ -36,11 +37,15 @@
 .hero-feature img {
   display: block;
   width: 100%;
-  height: 250px;
+  height: auto;
   object-fit: cover;
 }
 
-/* Heading */
+/* --- Content (stacked below image on mobile/tablet) --- */
+.hero-feature > div:last-child {
+  padding: 0 14px;
+}
+
 .hero-feature h2 {
   margin: 18px 0 0;
   font-family: var(--heading-font-family);
@@ -50,7 +55,6 @@
   color: var(--text-color);
 }
 
-/* Description */
 .hero-feature p {
   margin: 0;
   font-family: var(--body-font-family);
@@ -59,11 +63,12 @@
   color: var(--text-color);
 }
 
-/* CTA button — yellow, uppercase (override global link + button styles) */
+/* CTA row spacing */
 .hero-feature p:last-child {
   margin: 18px 0;
 }
 
+/* CTA button — yellow, uppercase (override global link + button styles) */
 .hero-feature a.button:any-link,
 .hero-feature a:any-link {
   display: inline-block;
@@ -76,7 +81,7 @@
   font-family: var(--body-font-family);
   font-size: 14px;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 21px;
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
@@ -87,13 +92,12 @@
   text-decoration: none;
 }
 
-/* --- Desktop --- */
-@media (width >= 900px) {
+/* --- Desktop (>= 1200px): fixed-height image + overlapping white card --- */
+@media (width >= 1200px) {
   .hero-feature img {
     height: 640px;
   }
 
-  /* Content becomes a white card overlapping the image bottom */
   .hero-feature > div:last-child {
     position: relative;
     z-index: 1;

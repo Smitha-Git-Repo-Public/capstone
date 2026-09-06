@@ -1,7 +1,9 @@
 /* Block: columns-featured — grey featured-article callout (image + text panel)
- * Values extracted from source computed styles (wknd.site featured teaser). */
+ * Values extracted from source computed styles (wknd.site featured teaser).
+ * Source: .cmp-teaser--featured — base row-reverse (image left, grey panel right);
+ * stacks to a single column below the tablet breakpoint (content on top, image below). */
 
-/* --- Base (mobile-first): stacked, image on top, grey text panel below --- */
+/* --- Base (mobile-first): stacked, grey text panel on top, image below --- */
 .columns-featured > div {
   display: flex;
   flex-direction: column;
@@ -12,15 +14,13 @@
   width: 100%;
 }
 
-/* text cell (grey panel) renders after the image on mobile */
+/* text cell (grey panel) — first in DOM, renders on top when stacked */
 .columns-featured > div > div {
-  order: 1;
   background-color: rgb(235 235 235);
-  padding: 36px 24px;
+  padding: 63px 36px 36px;
 }
 
 .columns-featured > div > .columns-featured-img-col {
-  order: 0;
   background-color: transparent;
   padding: 0;
   overflow: hidden;
@@ -77,8 +77,8 @@ main .columns-featured a:any-link:hover {
   margin: 18px 0 0;
 }
 
-/* --- Desktop: image left, grey text panel right, equal heights --- */
-@media (width >= 900px) {
+/* --- Tablet and up: image left, grey text panel right, equal heights --- */
+@media (width >= 600px) {
   .columns-featured > div {
     flex-direction: row;
     align-items: stretch;

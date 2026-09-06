@@ -5,21 +5,29 @@
  *
  * Structural note: on the WKND source each profile is authored as its own
  * one-card block, so several sibling .cards-profile blocks sit inside a single
- * section. To reproduce the source 4-up / 3-up grid, the layout grid is applied
- * to the section container (.cards-profile-container) and the individual
- * blocks/wrappers become the grid items. Values extracted from
- * wknd.site computed styles (see migration-work/cards-profile-extracted.css).
+ * section. To reproduce the source responsive grid (1-up mobile, 2-up tablet,
+ * 4-up desktop) the layout grid is applied to the section container
+ * (.cards-profile-container) and the individual block wrappers become the grid
+ * items. Column/card widths, gaps and side padding are matched to wknd.site
+ * computed geometry at 375 / 768 / 1440.
  */
 
-/* --- Section-level grid: arrange the one-card blocks like the source --- */
+/* --- Section-level grid: arrange the one-card blocks like the source ---
+   Source geometry:
+     mobile  (<600):  1 column,  side padding 28px, card ~319px
+     tablet  (>=600): 2 columns, 56px column gap,   card ~328px @768
+     desktop (>=1200):4 columns, 56px column gap,   card ~235px (content ~1108px)
+   A shared max-width of 1164px reproduces the desktop card width while leaving
+   tablet/mobile full-width (their content never reaches the cap). */
 main .section.cards-profile-container {
+  box-sizing: border-box;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 8px 0;
+  grid-template-columns: 1fr;
+  gap: 27px 56px;
   align-items: start;
-  max-width: 1200px;
+  max-width: 1164px;
   margin-inline: auto;
-  padding: 0 24px;
+  padding: 0 28px;
 }
 
 /* neutralize the global `.section > div` max-width / centering / padding
@@ -35,9 +43,15 @@ main .section.cards-profile-container > div:not(.cards-profile-wrapper) {
   grid-column: 1 / -1;
 }
 
-@media (width >= 900px) {
+@media (width >= 600px) {
   main .section.cards-profile-container {
-    padding: 0 32px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 1200px) {
+  main .section.cards-profile-container {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -53,7 +67,7 @@ main .section.cards-profile-container > div:not(.cards-profile-wrapper) {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 9px 14px 18px;
+  padding: 0;
   border: none;
   background: none;
 }
@@ -102,7 +116,7 @@ main .section.cards-profile-container > div:not(.cards-profile-wrapper) {
 
 /* --- Social icon bar --- */
 .cards-profile .cards-profile-card-body p {
-  margin: 18px 0 0;
+  margin: 22px 0 0;
   display: flex;
   justify-content: center;
   gap: 0;
