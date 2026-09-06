@@ -89,18 +89,27 @@ export default async function decorate(block) {
         const locale = document.createElement('div');
         locale.className = 'nav-locale';
 
+        const label = a.textContent.trim();
         const toggle = document.createElement('button');
         toggle.type = 'button';
         toggle.className = 'nav-locale-toggle';
         toggle.setAttribute('aria-expanded', 'false');
         toggle.setAttribute('aria-haspopup', 'true');
-        toggle.setAttribute('aria-label', `Toggle Language ${a.textContent.trim()}`);
+        toggle.setAttribute('aria-label', `Toggle Language ${label}`);
         toggle.style.backgroundImage = `url('${img.getAttribute('src')}')`;
-        toggle.textContent = a.textContent.trim();
+        toggle.innerHTML = `<span class="nav-locale-label">${label}</span><span class="nav-locale-chevron" aria-hidden="true"></span>`;
 
         const dropdown = localeList.cloneNode(true);
         dropdown.className = 'nav-locale-dropdown';
         dropdown.hidden = true;
+
+        // Mark the active language link (matches the current toggle label).
+        const activeCode = label.toLowerCase();
+        dropdown.querySelectorAll('a').forEach((link) => {
+          if (link.textContent.trim().toLowerCase() === activeCode) {
+            link.classList.add('nav-locale-active');
+          }
+        });
 
         toggle.addEventListener('click', (e) => {
           e.stopPropagation();
