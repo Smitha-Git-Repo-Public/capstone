@@ -35,6 +35,59 @@ async function fetchNav() {
   return tmp;
 }
 
+/**
+ * Build the Sign In modal (dark panel, yellow-underlined title, username +
+ * password fields, forgot-password link, yellow SIGN IN button) and wire up
+ * open/close (button click, overlay click, Escape) with basic focus handling.
+ * @returns {(e?: Event) => void} an open handler to attach to the Sign In link
+ */
+function createSignInModal() {
+  const overlay = document.createElement('div');
+  overlay.className = 'nav-signin-overlay';
+  overlay.hidden = true;
+  overlay.innerHTML = `
+    <div class="nav-signin-modal" role="dialog" aria-modal="true" aria-labelledby="nav-signin-title">
+      <button type="button" class="nav-signin-close" aria-label="Close sign in">&times;</button>
+      <h2 id="nav-signin-title" class="nav-signin-heading">Sign In</h2>
+      <h3 class="nav-signin-welcome">Welcome Back</h3>
+      <form class="nav-signin-form">
+        <label class="nav-signin-field">
+          <span class="sr-only">Username</span>
+          <input type="text" name="username" placeholder="USERNAME" autocomplete="username">
+        </label>
+        <label class="nav-signin-field">
+          <span class="sr-only">Password</span>
+          <input type="password" name="password" placeholder="PASSWORD" autocomplete="current-password">
+        </label>
+        <a class="nav-signin-forgot" href="#forgot-password">Forgot your password?</a>
+        <button type="submit" class="nav-signin-submit">Sign In</button>
+      </form>
+    </div>`;
+
+  const close = () => {
+    overlay.hidden = true;
+    document.body.style.overflowY = '';
+  };
+  const open = (e) => {
+    if (e) e.preventDefault();
+    overlay.hidden = false;
+    document.body.style.overflowY = 'hidden';
+    overlay.querySelector('input')?.focus();
+  };
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay || e.target.closest('.nav-signin-close')) close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !overlay.hidden) close();
+  });
+  // Demo form: no backend — just prevent navigation.
+  overlay.querySelector('.nav-signin-form').addEventListener('submit', (e) => e.preventDefault());
+
+  document.body.append(overlay);
+  return open;
+}
+
 /** Toggle the mobile menu open/closed. */
 function toggleMenu(nav, expanded) {
   const button = nav.querySelector('.nav-hamburger button');
@@ -139,9 +192,11 @@ export default async function decorate(block) {
         locale.append(toggle, dropdown);
         inner.append(locale);
       } else {
-        // Sign In (plain link).
+        // Sign In: a plain link that opens the sign-in modal.
         const link = a.cloneNode(true);
         link.classList.add('nav-signin');
+        const openModal = createSignInModal();
+        link.addEventListener('click', openModal);
         inner.append(link);
       }
     });

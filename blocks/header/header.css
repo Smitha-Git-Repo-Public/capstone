@@ -440,3 +440,135 @@ header .nav-search-form:focus-within {
     width: 160px;
   }
 }
+
+/* --- Sign In modal --- */
+.nav-signin-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 90px 16px 40px;
+  overflow-y: auto;
+  background: rgb(0 0 0 / 55%);
+}
+
+.nav-signin-overlay[hidden] {
+  display: none;
+}
+
+.nav-signin-modal {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  box-sizing: border-box;
+  padding: 48px;
+  background: var(--wknd-dark);
+  color: var(--wknd-light-text);
+  font-family: var(--wknd-nav-font);
+}
+
+.nav-signin-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  border: none;
+  background: transparent;
+  color: var(--wknd-light-text);
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.nav-signin-heading {
+  margin: 0;
+  padding-bottom: 12px;
+  border-bottom: 3px solid var(--wknd-yellow);
+  display: inline-block;
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1;
+  color: var(--wknd-light-text);
+}
+
+.nav-signin-welcome {
+  margin: 28px 0 24px;
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+  font-size: 28px;
+  color: var(--wknd-light-text);
+}
+
+.nav-signin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nav-signin-field {
+  display: block;
+}
+
+.nav-signin-field input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20px;
+  border: 1px solid rgb(120 120 120);
+  background: transparent;
+  color: var(--wknd-light-text);
+  font: inherit;
+  text-transform: uppercase;
+}
+
+.nav-signin-field input::placeholder {
+  color: rgb(140 140 140);
+  text-transform: uppercase;
+}
+
+.nav-signin-field input:focus {
+  outline: 2px solid var(--wknd-yellow);
+  outline-offset: 2px;
+}
+
+.nav-signin-forgot {
+  color: var(--wknd-light-text);
+  font-weight: 600;
+  font-size: 18px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.nav-signin-forgot:where(:hover, :focus) {
+  text-decoration: underline;
+}
+
+.nav-signin-submit {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 18px 48px;
+  border: none;
+  background: var(--wknd-yellow);
+  color: var(--wknd-dark);
+  font: inherit;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.nav-signin-submit:where(:hover, :focus-visible) {
+  opacity: 0.88;
+}
+
+.nav-signin-modal .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
