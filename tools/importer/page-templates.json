@@ -1,0 +1,601 @@
+{
+  "metadata": {
+    "projectType": "da"
+  },
+  "templates": [
+    {
+      "name": "magazine",
+      "urls": [
+        "https://wknd.site/ca/en/magazine/arctic-surfing.html",
+        "https://wknd.site/ca/en/magazine/guide-la-skateparks.html",
+        "https://wknd.site/ca/en/magazine/members-only/alaskan-adventure.html",
+        "https://wknd.site/ca/en/magazine/members-only/fly-fishing-the-amazon.html",
+        "https://wknd.site/ca/en/magazine/san-diego-surf.html",
+        "https://wknd.site/ca/en/magazine/ski-touring.html",
+        "https://wknd.site/ca/en/magazine/western-australia.html",
+        "https://wknd.site/us/en/magazine/arctic-surfing.html",
+        "https://wknd.site/us/en/magazine/guide-la-skateparks.html",
+        "https://wknd.site/us/en/magazine/san-diego-surf.html",
+        "https://wknd.site/us/en/magazine/ski-touring.html",
+        "https://wknd.site/us/en/magazine/western-australia.html"
+      ],
+      "representativeUrl": "https://wknd.site/us/en/magazine/arctic-surfing.html",
+      "description": "To be named in naming step",
+      "blocks": [
+        {
+          "name": "cards-profile",
+          "instances": [
+            ".cmp-byline"
+          ]
+        }
+      ],
+      "urlPattern": "/*",
+      "sections": [
+        {
+          "id": "lead-image",
+          "name": "Full-width lead article photo",
+          "selector": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.image.aem-GridColumn.aem-GridColumn--default--12"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.image.aem-GridColumn.aem-GridColumn--default--12"
+          ]
+        },
+        {
+          "id": "breadcrumb",
+          "name": "Breadcrumb navigation",
+          "selector": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.breadcrumb.aem-GridColumn.aem-GridColumn--default--12"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.breadcrumb.aem-GridColumn.aem-GridColumn--default--12"
+          ]
+        },
+        {
+          "id": "article-body",
+          "name": "Article title, byline line, and rich-text body",
+          "selector": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--8 > div.cmp-container"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--8 > div.cmp-container"
+          ]
+        },
+        {
+          "id": "author-bio",
+          "name": "Author bio card (contributor profile)",
+          "selector": [
+            ".cmp-byline"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-profile"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "sidebar-related",
+          "name": "Sidebar: Share This Story + Up Next related articles",
+          "selector": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > aside.container.responsivegrid.cmp-layoutcontainer--sidebar"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > aside.container.responsivegrid.cmp-layoutcontainer--sidebar"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "home",
+      "urls": [
+        "https://wknd.site/ch/de.html",
+        "https://wknd.site/us/en.html"
+      ],
+      "representativeUrl": "https://wknd.site/ch/de.html",
+      "description": "To be named in naming step",
+      "blocks": [
+        {
+          "name": "carousel-hero",
+          "instances": [
+            ".carousel.cmp-carousel--hero"
+          ]
+        },
+        {
+          "name": "columns-featured",
+          "instances": [
+            ".teaser.cmp-teaser--featured"
+          ]
+        },
+        {
+          "name": "cards-article",
+          "instances": [
+            ".image-list.list"
+          ]
+        },
+        {
+          "name": "hero-feature",
+          "instances": [
+            ".teaser.cmp-teaser--hero.cmp-teaser--imagebottom"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "carousel-hero",
+          "name": "Hero carousel",
+          "selector": ".carousel.cmp-carousel--hero",
+          "style": null,
+          "blocks": [
+            "carousel-hero"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "featured-article",
+          "name": "Featured article",
+          "selector": ".teaser.cmp-teaser--featured",
+          "style": "grey",
+          "blocks": [
+            "columns-featured"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "recent-articles",
+          "name": "Recent Articles",
+          "selector": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(1) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.title.cmp-title--underline.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(2)",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(1) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.image-list.list.aem-GridColumn.aem-GridColumn--default--12",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(1) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div:nth-of-type(4)",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(1) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.separator.aem-GridColumn.aem-GridColumn--default--12"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-article"
+          ],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(1) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.title.cmp-title--underline.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(2)",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(1) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div:nth-of-type(4)",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(1) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.separator.aem-GridColumn.aem-GridColumn--default--12"
+          ]
+        },
+        {
+          "id": "climbing-new-zealand",
+          "name": "Climbing New Zealand feature",
+          "selector": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(1) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.title.cmp-title--underline.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(6)",
+            ".teaser.cmp-teaser--hero.cmp-teaser--imagebottom"
+          ],
+          "style": null,
+          "blocks": [
+            "hero-feature"
+          ],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(1) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.title.cmp-title--underline.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(6)"
+          ]
+        },
+        {
+          "id": "where-do-you-want-to-go",
+          "name": "Where do you want to go?",
+          "selector": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(2) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.title.aem-GridColumn.aem-GridColumn--default--12",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(2) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.image-list.list.aem-GridColumn.aem-GridColumn--default--12",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(2) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div:nth-of-type(3)",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(2) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.separator.aem-GridColumn.aem-GridColumn--default--12"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-article"
+          ],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(2) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.title.aem-GridColumn.aem-GridColumn--default--12",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(2) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div:nth-of-type(3)",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(2) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.separator.aem-GridColumn.aem-GridColumn--default--12"
+          ]
+        }
+      ],
+      "urlPattern": "/*"
+    },
+    {
+      "name": "about-us",
+      "urls": [
+        "https://wknd.site/us/en/about-us.html",
+        "https://wknd.site/us/en/magazine.html"
+      ],
+      "representativeUrl": "https://wknd.site/us/en/about-us.html",
+      "description": "To be named in naming step",
+      "blocks": [
+        {
+          "name": "cards-profile",
+          "instances": [
+            "section.experiencefragment.cmp-experience-fragment--contributor"
+          ]
+        },
+        {
+          "name": "columns-featured",
+          "instances": [
+            ".teaser.cmp-teaser--featured"
+          ]
+        },
+        {
+          "name": "cards-article",
+          "instances": [
+            ".image-list.list"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "about-intro",
+          "name": "About Us page title + Our Contributors intro",
+          "selector": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.title.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(1)"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.title.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(1)",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.title.cmp-title--underline.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(2)",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.text.cmp-text--font-small.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(3)"
+          ]
+        },
+        {
+          "id": "contributors-grid",
+          "name": "Our Contributors profile grid",
+          "selector": [
+            "section.experiencefragment.cmp-experience-fragment--contributor"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-profile"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "guides-heading",
+          "name": "WKND Guides heading + intro",
+          "selector": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.title.cmp-title--underline.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(4)"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.title.cmp-title--underline.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(4)",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.text.cmp-text--font-small.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(5)"
+          ]
+        },
+        {
+          "id": "guides-grid",
+          "name": "WKND Guides profile grid",
+          "selector": [
+            "section.experiencefragment.cmp-experience-fragment--contributor"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-profile"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "magazine-title",
+          "name": "Magazine page title",
+          "selector": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.title.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(1)"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.title.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(1)"
+          ]
+        },
+        {
+          "id": "magazine-featured",
+          "name": "Featured Article teaser",
+          "selector": [
+            ".teaser.cmp-teaser--featured",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.teaser.cmp-teaser--featured.aem-GridColumn.aem-GridColumn--default--12"
+          ],
+          "style": null,
+          "blocks": [
+            "columns-featured"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "magazine-all-articles-heading",
+          "name": "All Articles heading",
+          "selector": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.title.cmp-title--underline.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(3)"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.title.cmp-title--underline.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(3)"
+          ]
+        },
+        {
+          "id": "magazine-article-grid",
+          "name": "All Articles image-list grid",
+          "selector": [
+            ".image-list.list",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.image-list.list.aem-GridColumn.aem-GridColumn--default--12"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-article"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "magazine-members-only",
+          "name": "Members Only heading + intro + separator",
+          "selector": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.title.cmp-title--underline.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(5)"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.title.cmp-title--underline.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(5)",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.text.aem-GridColumn.aem-GridColumn--default--12",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.separator.cmp-separator--space-medium.aem-GridColumn.aem-GridColumn--default--12"
+          ]
+        }
+      ],
+      "urlPattern": "/us/en/*"
+    },
+    {
+      "name": "adventures-2",
+      "urls": [
+        "https://wknd.site/ca/en/adventures/bali-surf-camp.html",
+        "https://wknd.site/ca/en/adventures/beervana-portland.html",
+        "https://wknd.site/ca/en/adventures/climbing-new-zealand.html",
+        "https://wknd.site/ca/en/adventures/colorado-rock-climbing.html",
+        "https://wknd.site/ca/en/adventures/cycling-southern-utah.html",
+        "https://wknd.site/ca/en/adventures/cycling-tuscany.html",
+        "https://wknd.site/ca/en/adventures/downhill-skiing-wyoming.html",
+        "https://wknd.site/ca/en/adventures/gastronomic-marais-tour.html",
+        "https://wknd.site/ca/en/adventures/napa-wine-tasting.html",
+        "https://wknd.site/ca/en/adventures/riverside-camping-australia.html",
+        "https://wknd.site/ca/en/adventures/ski-touring-mont-blanc.html",
+        "https://wknd.site/ca/en/adventures/surf-camp-costa-rica.html",
+        "https://wknd.site/ca/en/adventures/tahoe-skiing.html",
+        "https://wknd.site/ca/en/adventures/west-coast-cycling.html",
+        "https://wknd.site/ca/en/adventures/whistler-mountain-biking.html",
+        "https://wknd.site/ca/en/adventures/yosemite-backpacking.html",
+        "https://wknd.site/us/en/adventures/bali-surf-camp.html",
+        "https://wknd.site/us/en/adventures/beervana-portland.html",
+        "https://wknd.site/us/en/adventures/climbing-new-zealand.html",
+        "https://wknd.site/us/en/adventures/colorado-rock-climbing.html",
+        "https://wknd.site/us/en/adventures/cycling-southern-utah.html",
+        "https://wknd.site/us/en/adventures/cycling-tuscany.html",
+        "https://wknd.site/us/en/adventures/downhill-skiing-wyoming.html",
+        "https://wknd.site/us/en/adventures/gastronomic-marais-tour.html",
+        "https://wknd.site/us/en/adventures/napa-wine-tasting.html",
+        "https://wknd.site/us/en/adventures/riverside-camping-australia.html",
+        "https://wknd.site/us/en/adventures/ski-touring-mont-blanc.html",
+        "https://wknd.site/us/en/adventures/surf-camp-costa-rica.html",
+        "https://wknd.site/us/en/adventures/tahoe-skiing.html",
+        "https://wknd.site/us/en/adventures/west-coast-cycling.html",
+        "https://wknd.site/us/en/adventures/whistler-mountain-biking.html",
+        "https://wknd.site/us/en/adventures/yosemite-backpacking.html"
+      ],
+      "representativeUrl": "https://wknd.site/us/en/adventures/bali-surf-camp.html",
+      "description": "To be named in naming step",
+      "blocks": [
+        {
+          "name": "carousel-gallery",
+          "instances": [
+            ".carousel.cmp-carousel--mini"
+          ]
+        },
+        {
+          "name": "columns-details",
+          "instances": [
+            ".contentfragment.cmp-contentfragment--elements"
+          ]
+        },
+        {
+          "name": "tabs-content",
+          "instances": [
+            ".tabs.panelcontainer"
+          ]
+        }
+      ],
+      "urlPattern": "/us/en/adventures/*",
+      "sections": [
+        {
+          "id": "breadcrumb",
+          "name": "Breadcrumb navigation",
+          "selector": [
+            ".breadcrumb.cmp-breadcrumb--fixed"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            ".breadcrumb.cmp-breadcrumb--fixed"
+          ]
+        },
+        {
+          "id": "top-carousel",
+          "name": "Full-width top image carousel",
+          "selector": [
+            ".carousel.cmp-carousel--mini"
+          ],
+          "style": null,
+          "blocks": [
+            "carousel-gallery"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "title",
+          "name": "Adventure title",
+          "selector": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.title.cmp-title--underline.aem-GridColumn.aem-GridColumn--default--12"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.title.cmp-title--underline.aem-GridColumn.aem-GridColumn--default--12"
+          ]
+        },
+        {
+          "id": "details-panel",
+          "name": "Adventure details attribute panel + share",
+          "selector": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--3"
+          ],
+          "style": null,
+          "blocks": [
+            "columns-details"
+          ],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--3 > div.cmp-container > div.aem-Grid > div.title",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--3 > div.cmp-container > div.aem-Grid > div.sharing"
+          ]
+        },
+        {
+          "id": "tabs",
+          "name": "Content tabs (Overview / Itinerary / What to Bring)",
+          "selector": [
+            ".tabs.panelcontainer"
+          ],
+          "style": null,
+          "blocks": [
+            "tabs-content"
+          ],
+          "defaultContent": []
+        }
+      ]
+    },
+    {
+      "name": "adventures",
+      "urls": [
+        "https://wknd.site/us/en/adventures.html"
+      ],
+      "representativeUrl": "https://wknd.site/us/en/adventures.html",
+      "description": "To be named in naming step",
+      "blocks": [
+        {
+          "name": "hero-intro",
+          "instances": [
+            ".teaser.cmp-teaser--hero"
+          ]
+        },
+        {
+          "name": "tabs-filter",
+          "instances": [
+            ".tabs.panelcontainer"
+          ]
+        },
+        {
+          "name": "cards-article",
+          "instances": [
+            ".tabs.panelcontainer .image-list.list"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "adventures-hero",
+          "name": "Adventures page hero",
+          "selector": [
+            ".teaser.cmp-teaser--hero",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(1)"
+          ],
+          "style": null,
+          "blocks": [
+            "hero-intro"
+          ],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(1)"
+          ]
+        },
+        {
+          "id": "current-adventures",
+          "name": "Current Adventures filterable grid",
+          "selector": [
+            ".tabs.panelcontainer",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(2) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.title.cmp-title--underline.aem-GridColumn.aem-GridColumn--default--12"
+          ],
+          "style": null,
+          "blocks": [
+            "tabs-filter",
+            "cards-article"
+          ],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(2) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.title.cmp-title--underline.aem-GridColumn.aem-GridColumn--default--12",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--12 > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > main.container.responsivegrid.cmp-layout-container--fixed.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(2) > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.separator.aem-GridColumn.aem-GridColumn--default--12"
+          ]
+        }
+      ],
+      "urlPattern": "/us/en/*"
+    },
+    {
+      "name": "faqs",
+      "urls": [
+        "https://wknd.site/us/en/faqs.html"
+      ],
+      "representativeUrl": "https://wknd.site/us/en/faqs.html",
+      "description": "To be named in naming step",
+      "blocks": [
+        {
+          "name": "accordion-faq",
+          "instances": [
+            ".accordion.panelcontainer"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "faqs-intro",
+          "name": "FAQ page intro (title, hero image, description)",
+          "selector": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--8:nth-of-type(1)"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--8:nth-of-type(1) .title.cmp-title--underline",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--8:nth-of-type(1) .image.cmp-image",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--8:nth-of-type(1) .text.cmp-text"
+          ]
+        },
+        {
+          "id": "faqs-accordion",
+          "name": "Frequently asked questions (collapsible Q&A list)",
+          "selector": [
+            ".accordion.panelcontainer"
+          ],
+          "style": null,
+          "blocks": [
+            "accordion-faq"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "faqs-need-help",
+          "name": "Need more help? contact panel (right column)",
+          "selector": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--3:nth-of-type(2)"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--3:nth-of-type(2) .title.cmp-title",
+            "body > div.root.container.responsivegrid > div.cmp-container > div.aem-Grid.aem-Grid--12.aem-Grid--tablet--12.aem-Grid--default--12.aem-Grid--phone--12 > div.container.responsivegrid.aem-GridColumn.aem-GridColumn--default--3:nth-of-type(2) .text.cmp-text"
+          ]
+        }
+      ],
+      "urlPattern": "/us/en/*"
+    }
+  ]
+}

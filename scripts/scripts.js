@@ -146,10 +146,39 @@ function decorateButtons(main) {
  * Decorates the main element.
  * @param {Element} main The main element
  */
+/**
+ * Consume `section-metadata` tables: apply their key/value pairs to the parent
+ * section (Style -> class names, other keys -> data-* attributes) and remove the
+ * table. The vendored aem.js decorateSections does not handle this, so without
+ * it the metadata renders as literal "style / grey" text on the page.
+ * @param {Element} main
+ */
+function decorateSectionMetadata(main) {
+  main.querySelectorAll(':scope > div > .section-metadata').forEach((meta) => {
+    const section = meta.closest(':scope > div') || meta.parentElement;
+    [...meta.children].forEach((row) => {
+      const cells = row.children;
+      if (cells.length < 2) return;
+      const key = cells[0].textContent.trim().toLowerCase();
+      const value = cells[1].textContent.trim();
+      if (key === 'style') {
+        value.split(',').forEach((s) => {
+          const cls = s.trim().toLowerCase().replace(/\s+/g, '-');
+          if (cls) section.classList.add(cls);
+        });
+      } else if (key) {
+        section.dataset[key.replace(/-([a-z])/g, (_, c) => c.toUpperCase())] = value;
+      }
+    });
+    meta.remove();
+  });
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
+  decorateSectionMetadata(main);
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);

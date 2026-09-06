@@ -1,0 +1,88 @@
+/*
+ * accordion-faq — visual design migrated from wknd.site/us/en/faqs.html
+ * Source: AEM Core Components accordion (.cmp-accordion).
+ * Items are stacked flush (no gap, no box border); each header carries a
+ * 2px bottom rule. Question = Source Sans Pro 16px / 600 / uppercase.
+ * Body = 14px / 21px. Expand icon is a plus that becomes a minus when open.
+ */
+
+.accordion-faq {
+  color: var(--text-color); /* rgb(32 32 32) */
+}
+
+/* --- Item: no border, no gap between items --- */
+.accordion-faq .accordion-faq-item {
+  border: none;
+}
+
+.accordion-faq .accordion-faq-item + .accordion-faq-item {
+  margin-top: 0;
+}
+
+/* --- Header (summary) --- */
+.accordion-faq .accordion-faq-item-label {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  padding: 13px 40px 13px 8px;
+  border-bottom: 2px solid rgb(235 235 235);
+  font-family: var(--body-font-family); /* Source Sans Pro */
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
+  color: rgb(0 0 0);
+  cursor: pointer;
+  list-style: none;
+}
+
+.accordion-faq .accordion-faq-item-label::-webkit-details-marker {
+  display: none;
+}
+
+/* EDS wraps the question text in a <p>; strip its global margins so the
+   header stays a single 13px-padded row like the source. */
+.accordion-faq .accordion-faq-item-label p {
+  margin: 0;
+  font: inherit;
+  text-transform: inherit;
+}
+
+/* --- Expand / collapse icon (plus → minus) --- */
+.accordion-faq .accordion-faq-item-label::before,
+.accordion-faq .accordion-faq-item-label::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 16px;
+  height: 2px;
+  background-color: rgb(0 0 0);
+  transform: translateY(-50%);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+/* vertical bar of the plus */
+.accordion-faq .accordion-faq-item-label::after {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+/* open state: hide the vertical bar → leaves a minus */
+.accordion-faq .accordion-faq-item[open] .accordion-faq-item-label::after {
+  opacity: 0;
+  transform: translateY(-50%) rotate(0deg);
+}
+
+/* --- Panel body --- */
+.accordion-faq .accordion-faq-item-body {
+  padding: 7px 0 0 7px;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--text-color); /* rgb(32 32 32) */
+}
+
+.accordion-faq .accordion-faq-item-body p {
+  margin: 0 0 0.8em;
+  font-size: 14px;
+  line-height: 21px;
+}

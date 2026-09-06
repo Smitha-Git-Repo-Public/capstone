@@ -1,0 +1,20 @@
+:root {
+  --heading-font-family: 'Asar', georgia, 'Times New Roman', times, serif;
+  --body-font-family: 'Source Sans Pro', 'Helvetica Neue', helvetica, arial, sans-serif;
+  --background-color: rgb(255 255 255);
+  --text-color: rgb(32 32 32);
+  --link-color: rgb(0 69 255);
+  --link-hover-color: rgb(0 69 255);
+  --brand-primary: #ffea00;
+  --dark-color: rgb(32 32 32);
+  --light-color: rgb(255 255 255);
+  --light-text-color: rgb(235 235 235);
+  --section-padding: 48px;
+  --nav-height: 64px;
+  --heading-size-xxl: 48px;
+  --heading-size-xl: 36px;
+  --heading-size-l: 24px;
+  --heading-size-m: 20px;
+  --heading-size-s: 18px;
+  --heading-size-xs: 16px;
+}

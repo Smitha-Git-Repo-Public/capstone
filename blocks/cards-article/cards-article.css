@@ -1,0 +1,79 @@
+/* Block: cards-article — WKND image-list (article/adventure grid) */
+
+/* Values extracted from source .image-list.list ul.cmp-image-list computed styles. */
+
+.cards-article > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px 14px;
+}
+
+/* flat cards — source has no border, background, radius, or shadow */
+.cards-article > ul > li {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.cards-article .cards-article-card-image {
+  line-height: 0;
+}
+
+.cards-article .cards-article-card-image img {
+  width: 100%;
+  aspect-ratio: 13 / 10;
+  object-fit: cover;
+  display: block;
+}
+
+.cards-article .cards-article-card-body {
+  margin: 0;
+}
+
+/* title — source visible title span: dark, uppercase, 18px, semibold, body font */
+.cards-article .cards-article-card-body h3 {
+  margin: 12px 0 0;
+  font-family: var(--body-font-family);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 27px;
+  text-transform: uppercase;
+}
+
+.cards-article .cards-article-card-body h3 a:any-link {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.cards-article .cards-article-card-body h3 a:hover {
+  text-decoration: underline;
+}
+
+/* description — grey, uppercase, 14px, single-line ellipsis */
+.cards-article .cards-article-card-body p {
+  margin: 16px 0 0;
+  color: rgb(105 105 105);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (width >= 600px) {
+  .cards-article > ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width >= 900px) {
+  .cards-article > ul {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "url": "https://wknd.site/ca/en/magazine/members-only.html",
+  "path": "ca/en/magazine/members-only",
+  "timestamp": "2026-09-06T08:19:57.283Z",
+  "title": "Members Only",
+  "template": "about-us",
+  "blocks": [
+    "cards-article"
+  ]
+}

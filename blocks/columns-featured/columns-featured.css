@@ -1,0 +1,104 @@
+/* Block: columns-featured — grey featured-article callout (image + text panel)
+ * Values extracted from source computed styles (wknd.site featured teaser). */
+
+/* --- Base (mobile-first): stacked, image on top, grey text panel below --- */
+.columns-featured > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.columns-featured img {
+  display: block;
+  width: 100%;
+}
+
+/* text cell (grey panel) renders after the image on mobile */
+.columns-featured > div > div {
+  order: 1;
+  background-color: rgb(235 235 235);
+  padding: 36px 24px;
+}
+
+.columns-featured > div > .columns-featured-img-col {
+  order: 0;
+  background-color: transparent;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* description */
+.columns-featured p {
+  margin: 0;
+  font-size: var(--body-font-size-xs); /* 14px */
+  line-height: 1.75;
+}
+
+/* pretitle: "Featured Article" — bold 18px */
+.columns-featured p:first-child {
+  margin: 0 0 13.5px;
+  font-size: var(--body-font-size-m); /* 18px */
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+/* title */
+.columns-featured h2 {
+  margin: 18px 0;
+}
+
+/* CTA — yellow WKND button (overrides global plain-link reset) */
+main .columns-featured a.button:any-link,
+main .columns-featured a:any-link {
+  display: inline-block;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  padding: 14px 35px;
+  background-color: var(--brand-primary, #ffea00);
+  color: var(--text-color);
+  font-size: var(--body-font-size-xs); /* 14px */
+  font-weight: 600;
+  line-height: 1.5;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+main .columns-featured a.button:any-link:hover,
+main .columns-featured a:any-link:hover {
+  background-color: var(--brand-primary, #ffea00);
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+/* CTA container spacing */
+.columns-featured .button-container,
+.columns-featured p:last-child {
+  margin: 18px 0 0;
+}
+
+/* --- Desktop: image left, grey text panel right, equal heights --- */
+@media (width >= 900px) {
+  .columns-featured > div {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .columns-featured > div > div {
+    order: 1;
+    flex: 1 1 auto;
+    padding: 63px 36px 36px;
+  }
+
+  .columns-featured > div > .columns-featured-img-col {
+    order: 0;
+    flex: 0 0 62.5%;
+    padding: 0;
+  }
+
+  .columns-featured > div > .columns-featured-img-col img {
+    height: 100%;
+    object-fit: cover;
+  }
+}

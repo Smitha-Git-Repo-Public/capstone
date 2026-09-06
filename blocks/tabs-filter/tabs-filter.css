@@ -1,0 +1,64 @@
+/* Block: tabs-filter — category filter bar
+ * Design extracted from source computed styles (wknd.site adventures category tabs).
+ * Segmented flat tabs: active = solid dark fill + white uppercase text,
+ * inactive = transparent + dark uppercase text. No borders/box/radius. Borderless panel.
+ */
+
+/* tablist (ol.cmp-tabs__tablist on source) → .tabs-filter-list */
+.tabs-filter .tabs-filter-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 18px 0;
+  padding: 0;
+  list-style: none;
+  justify-content: flex-start;
+}
+
+/* tab buttons (li.cmp-tabs__tab on source) — reset EDS/global button chrome */
+.tabs-filter .tabs-filter-list button {
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 0 solid transparent;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  padding: 8px 16px;
+  background-color: transparent;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 400;
+  line-height: 21px;
+  text-align: left;
+  text-transform: uppercase;
+  text-overflow: unset;
+  overflow: unset;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.tabs-filter .tabs-filter-list button p {
+  margin: 0;
+  line-height: inherit;
+}
+
+/* active tab (li.cmp-tabs__tab--active on source) */
+.tabs-filter .tabs-filter-list button[aria-selected='true'] {
+  border-color: transparent;
+  background-color: var(--dark-color);
+  color: var(--background-color);
+}
+
+/* panel (div.cmp-tabs__tabpanel on source) — borderless, no padding */
+.tabs-filter .tabs-filter-panel {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+}
+
+.tabs-filter .tabs-filter-panel[aria-hidden='true'] {
+  display: none;
+}

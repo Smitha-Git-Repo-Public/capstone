@@ -1,0 +1,133 @@
+/*
+ * cards-profile
+ * WKND team / contributor profile card: circular portrait, serif name,
+ * uppercase role subtitle, and a solid dark bar of social icon links.
+ *
+ * Structural note: on the WKND source each profile is authored as its own
+ * one-card block, so several sibling .cards-profile blocks sit inside a single
+ * section. To reproduce the source 4-up / 3-up grid, the layout grid is applied
+ * to the section container (.cards-profile-container) and the individual
+ * blocks/wrappers become the grid items. Values extracted from
+ * wknd.site computed styles (see migration-work/cards-profile-extracted.css).
+ */
+
+/* --- Section-level grid: arrange the one-card blocks like the source --- */
+main .section.cards-profile-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 8px 0;
+  align-items: start;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 0 24px;
+}
+
+/* neutralize the global `.section > div` max-width / centering / padding
+   so the block wrappers behave as grid cells */
+main .section.cards-profile-container > div {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* default content (e.g. the "WKND Guides" heading + intro) spans the full row */
+main .section.cards-profile-container > div:not(.cards-profile-wrapper) {
+  grid-column: 1 / -1;
+}
+
+@media (width >= 900px) {
+  main .section.cards-profile-container {
+    padding: 0 32px;
+  }
+}
+
+/* --- Card --- */
+.cards-profile > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cards-profile > ul > li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 9px 14px 18px;
+  border: none;
+  background: none;
+}
+
+/* --- Circular portrait --- */
+.cards-profile .cards-profile-card-image {
+  line-height: 0;
+  width: 164px;
+  max-width: 100%;
+}
+
+.cards-profile .cards-profile-card-image img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* --- Text block --- */
+.cards-profile .cards-profile-card-body {
+  margin-top: 14px;
+  width: 100%;
+}
+
+/* Name */
+.cards-profile .cards-profile-card-body h3 {
+  margin: 0 0 6px;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-l);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-color);
+  text-transform: none;
+}
+
+/* Role / subtitle */
+.cards-profile .cards-profile-card-body h5 {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+/* --- Social icon bar --- */
+.cards-profile .cards-profile-card-body p {
+  margin: 18px 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+}
+
+.cards-profile .cards-profile-card-body a:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: var(--dark-color);
+  color: var(--light-text-color, rgb(235 235 235));
+  border-radius: 0;
+  text-decoration: none;
+}
+
+.cards-profile .cards-profile-card-body a:any-link:hover {
+  background-color: var(--brand-primary, #ffea00);
+  color: var(--dark-color);
+  text-decoration: none;
+}
+
+.cards-profile .cards-profile-card-body a svg {
+  width: 18px;
+  height: 18px;
+  fill: currentcolor;
+}

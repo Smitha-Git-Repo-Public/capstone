@@ -1,0 +1,39 @@
+{
+  "variantName": "cards-profile",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-09-06T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://wknd.site/us/en/about-us.html",
+    "originPage": "About Us page (Our Contributors and WKND Guides grids)",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "team",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "image + name + role + social links",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "team / contributor / staff profile grids",
+      "people directories with photo, name, role and social links",
+      "any repeating grid of person cards with a rounded portrait"
+    ],
+    "notSuitableFor": [
+      "article/adventure listing grids (use cards-article)",
+      "single side-by-side feature (use columns-featured)",
+      "text-only cards"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/us/en/about-us", "/us/en/magazine/arctic-surfing"],
+    "reuseCount": 2,
+    "lastUsed": "2026-09-06T07:43:47.859Z"
+  }
+}

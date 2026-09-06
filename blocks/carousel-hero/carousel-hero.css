@@ -1,0 +1,223 @@
+/* Block: carousel-hero — WKND full-bleed hero carousel.
+ * Values extracted from https://wknd.site/us/en.html computed styles.
+ * Design: full-bleed background image + white content card with dark text,
+ * yellow uppercase CTA. Mobile stacks image over content; desktop overlays.
+ */
+
+/* full-bleed: override section content max-width wrapper */
+.carousel-hero-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+.carousel-hero .carousel-hero-slides-container {
+  position: relative;
+}
+
+.carousel-hero .carousel-hero-slides,
+.carousel-hero .carousel-hero-slide-indicators {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.carousel-hero .carousel-hero-slides {
+  display: flex;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  overflow: scroll clip;
+}
+
+.carousel-hero .carousel-hero-slides::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-hero .carousel-hero-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+}
+
+/* --- image --- */
+.carousel-hero .carousel-hero-slide-image {
+  width: 100%;
+  line-height: 0;
+}
+
+.carousel-hero .carousel-hero-slide-image picture {
+  display: block;
+}
+
+.carousel-hero .carousel-hero-slide-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* --- content card --- */
+.carousel-hero .carousel-hero-slide-content {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 8px 14px 24px;
+}
+
+.carousel-hero .carousel-hero-slide-content h2 {
+  margin: 18px 0 0;
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 54px;
+  color: var(--text-color);
+}
+
+.carousel-hero .carousel-hero-slide-content p {
+  margin: 0.5em 0 0;
+  font-size: 18px;
+  line-height: 31.5px;
+  color: var(--text-color);
+}
+
+/* --- CTA: yellow uppercase button (override global plain-link reset) --- */
+.carousel-hero .carousel-hero-slide-content .button-container {
+  display: block;
+  margin-top: 20px;
+}
+
+main .carousel-hero .carousel-hero-slide-content a:any-link,
+main .carousel-hero .carousel-hero-slide-content a.button:any-link {
+  display: inline-block;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  padding: 14px 35px;
+  background-color: var(--brand-primary);
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* --- slide indicators (dots) --- */
+.carousel-hero .carousel-hero-slide-indicators {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  padding: 14px 0;
+  background-color: transparent;
+  line-height: 0;
+}
+
+.carousel-hero .carousel-hero-slide-indicator button {
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: rgb(0 0 0 / 25%);
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.carousel-hero .carousel-hero-slide-indicator button:disabled,
+.carousel-hero .carousel-hero-slide-indicator button:hover,
+.carousel-hero .carousel-hero-slide-indicator button:focus-visible {
+  background-color: rgb(0 0 0 / 80%);
+}
+
+/* --- navigation arrows --- */
+.carousel-hero .carousel-hero-navigation-buttons {
+  position: absolute;
+
+  /* mobile: image stacks above content, so center arrows over the image
+     (image is full-width ~9/16, so its vertical center is ~28vw) */
+  top: 28vw;
+  left: 12px;
+  right: 12px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel-hero .carousel-hero-navigation-buttons button {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: rgb(19 19 19 / 25%);
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.carousel-hero .carousel-hero-navigation-buttons button:hover,
+.carousel-hero .carousel-hero-navigation-buttons button:focus-visible {
+  background-color: rgb(19 19 19 / 60%);
+}
+
+.carousel-hero .carousel-hero-navigation-buttons button::after {
+  display: block;
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: calc(50% + 2px);
+  width: 12px;
+  height: 12px;
+  border: 2px solid #fff;
+  border-bottom: 0;
+  border-left: 0;
+  transform: translate(-50%, -50%) rotate(-135deg);
+}
+
+.carousel-hero .carousel-hero-navigation-buttons button.slide-next::after {
+  left: calc(50% - 2px);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* --- desktop: full-bleed image with white content card overlay --- */
+@media (width >= 900px) {
+  .carousel-hero .carousel-hero-slide {
+    align-items: flex-start;
+    justify-content: center;
+    min-height: min(50vw, calc(100dvh - var(--nav-height, 64px)));
+  }
+
+  .carousel-hero .carousel-hero-slide-image,
+  .carousel-hero .carousel-hero-slide-image picture {
+    position: absolute;
+    inset: 0;
+  }
+
+  .carousel-hero .carousel-hero-slide-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .carousel-hero .carousel-hero-slide-content {
+    position: relative;
+    z-index: 1;
+    width: 540px;
+    max-width: calc(100% - 88px);
+    margin-left: clamp(24px, 7vw, 132px);
+    padding: 24px 40px 32px;
+  }
+
+  .carousel-hero .carousel-hero-navigation-buttons {
+    top: 50%;
+    left: 24px;
+    right: 24px;
+  }
+}

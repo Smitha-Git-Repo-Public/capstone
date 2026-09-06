@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "url": "https://wknd.site/ca/en/magazine/ski-touring.html",
+  "path": "ca/en/magazine/ski-touring",
+  "timestamp": "2026-09-06T07:57:31.248Z",
+  "title": "Ski Touring",
+  "template": "magazine",
+  "blocks": [
+    "cards-profile"
+  ]
+}

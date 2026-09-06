@@ -1,9 +1,11 @@
 {
+  "type": "da",
   "sites": {
     "capstone": {
       "previewOrg": "Smitha-Git-Repo-Public",
       "previewSite": "capstone",
-      "contentHostUrl": "https://content.da.live/smitha-git-repo-public/capstone/"
+      "contentHostUrl": "https://content.da.live/smitha-git-repo-public/capstone/",
+      "libraryUrl": "https://main--sta-boilerplate--aemdemos.aem.page/tools/sidekick/library.json"
     }
   }
 }

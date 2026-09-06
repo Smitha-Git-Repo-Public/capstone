@@ -1,0 +1,75 @@
+/* hero-intro: full-bleed landscape image with an overlapping white text panel */
+
+/* Source: wknd.site teaser hero -- image 2:1 cover, white panel overlaps lower image */
+
+/* full-bleed: cancel the section wrapper max-width/padding so the image runs edge to edge */
+.hero-intro-container .hero-intro-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
+.hero-intro {
+  display: block;
+}
+
+/* image row -- full-bleed 2:1 cover image */
+.hero-intro > div:first-child {
+  margin: 0;
+}
+
+.hero-intro > div:first-child picture {
+  display: block;
+  width: 100%;
+}
+
+.hero-intro > div:first-child img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+/* text row -- white panel that overlaps the lower part of the image */
+.hero-intro > div:last-child {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: -48px auto 0;
+  padding: 8px 28px 24px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  text-align: left;
+}
+
+.hero-intro > div:last-child > div {
+  padding: 0;
+}
+
+/* title -- Asar serif, 36px desktop scale (brand xl) */
+.hero-intro h2 {
+  margin: 18px 0 0;
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+/* description -- Source Sans Pro, 18px/1.75 (brand body-m) */
+.hero-intro p {
+  margin: 8px 0 0;
+  color: var(--text-color);
+  font-size: var(--body-font-size-m);
+  line-height: 1.75;
+}
+
+/* no-image fallback (authored without a picture): plain text block */
+.hero-intro.no-image > div:last-child {
+  margin-top: 0;
+}
+
+@media (width >= 900px) {
+  .hero-intro > div:last-child {
+    margin-top: -160px;
+    padding: 24px 44px 32px;
+  }
+}
