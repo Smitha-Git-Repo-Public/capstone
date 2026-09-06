@@ -444,7 +444,23 @@ function loadDelayed() {
   // load anything that can be postponed to the latest here
 }
 
+/**
+ * The site root has no content of its own — send visitors to the US/English
+ * home page. Runs before any decoration so the boilerplate never renders.
+ * Uses replace() so the root doesn't add a back-button history entry.
+ * @returns {boolean} true if a redirect was issued (caller should stop).
+ */
+function redirectRootToHome() {
+  const { pathname, search, hash } = window.location;
+  if (pathname === '/' || pathname === '/index') {
+    window.location.replace(`/us/en${search}${hash}`);
+    return true;
+  }
+  return false;
+}
+
 async function loadPage() {
+  if (redirectRootToHome()) return;
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
