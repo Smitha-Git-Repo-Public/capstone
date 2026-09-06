@@ -41,12 +41,17 @@ export default async function decorate(block) {
   const footer = document.createElement('div');
   footer.className = 'footer-inner';
 
+  // Top row: brand + footer nav (left) and Follow Us + social icons (right),
+  // laid out on a single row like the source.
+  const top = document.createElement('div');
+  top.className = 'footer-top';
+
   // Section 0: brand + footer nav
   if (sections[0]) {
     const brandNav = document.createElement('div');
     brandNav.className = 'footer-brand-nav';
     brandNav.append(...sections[0].childNodes);
-    footer.append(brandNav);
+    top.append(brandNav);
   }
 
   // Section 1: Follow Us + social icons
@@ -54,10 +59,12 @@ export default async function decorate(block) {
     const social = document.createElement('div');
     social.className = 'footer-social';
     social.append(...sections[1].childNodes);
-    footer.append(social);
+    top.append(social);
   }
 
-  // Section 2: copyright + legal copy
+  footer.append(top);
+
+  // Section 2: copyright + legal copy (full-width row below)
   if (sections[2]) {
     const legal = document.createElement('div');
     legal.className = 'footer-legal';
