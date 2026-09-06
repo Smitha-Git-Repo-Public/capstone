@@ -69,7 +69,7 @@ export default async function decorate(block) {
   const wrapper = document.createElement('div');
   wrapper.className = 'nav-wrapper';
 
-  // --- Utility bar (row 0): tools — Sign In + locale toggle ---
+  // --- Utility bar (row 0): tools — Sign In + locale selector ---
   // Kept as a sibling of <nav> (its own dark bar) rather than a child, so the
   // dark background is the direct backdrop of the light utility text.
   if (toolsContent) {
@@ -77,19 +77,48 @@ export default async function decorate(block) {
     utility.className = 'nav-utility';
     const inner = document.createElement('div');
     inner.className = 'nav-utility-inner';
-    toolsContent.querySelectorAll('a').forEach((a) => {
-      const link = a.cloneNode(true);
-      const img = link.querySelector('img');
-      if (img) {
-        // locale toggle: render the flag as a background image on the anchor
-        link.classList.add('nav-locale');
-        link.textContent = link.textContent.trim();
-        link.style.backgroundImage = `url('${img.getAttribute('src')}')`;
+
+    // The locale entries live in the tools <ul>; extract before processing links.
+    const localeList = toolsContent.querySelector('ul');
+
+    // Direct <p> anchors: Sign In, and the locale toggle (has a flag <img>).
+    toolsContent.querySelectorAll(':scope > p > a').forEach((a) => {
+      const img = a.querySelector('img');
+      if (img && localeList) {
+        // Locale selector: a toggle button + a dropdown built from the <ul>.
+        const locale = document.createElement('div');
+        locale.className = 'nav-locale';
+
+        const toggle = document.createElement('button');
+        toggle.type = 'button';
+        toggle.className = 'nav-locale-toggle';
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-haspopup', 'true');
+        toggle.setAttribute('aria-label', `Toggle Language ${a.textContent.trim()}`);
+        toggle.style.backgroundImage = `url('${img.getAttribute('src')}')`;
+        toggle.textContent = a.textContent.trim();
+
+        const dropdown = localeList.cloneNode(true);
+        dropdown.className = 'nav-locale-dropdown';
+        dropdown.hidden = true;
+
+        toggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const open = toggle.getAttribute('aria-expanded') !== 'true';
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+          dropdown.hidden = !open;
+        });
+
+        locale.append(toggle, dropdown);
+        inner.append(locale);
       } else {
+        // Sign In (plain link).
+        const link = a.cloneNode(true);
         link.classList.add('nav-signin');
+        inner.append(link);
       }
-      inner.append(link);
     });
+
     utility.append(inner);
     wrapper.append(utility);
   }
@@ -143,6 +172,17 @@ export default async function decorate(block) {
     document.body.style.overflowY = '';
     const button = nav.querySelector('.nav-hamburger button');
     if (button) button.setAttribute('aria-label', 'Open navigation');
+  });
+
+  // Close the locale dropdown when clicking outside it.
+  document.addEventListener('click', (e) => {
+    const toggle = wrapper.querySelector('.nav-locale-toggle');
+    const dropdown = wrapper.querySelector('.nav-locale-dropdown');
+    if (!toggle || !dropdown || dropdown.hidden) return;
+    if (!e.target.closest('.nav-locale')) {
+      toggle.setAttribute('aria-expanded', 'false');
+      dropdown.hidden = true;
+    }
   });
 
   wrapper.append(nav);
