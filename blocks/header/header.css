@@ -251,19 +251,29 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after {
 /* Nav sections (the primary <ul>): hidden drawer on mobile, revealed when open.
    On mobile the list breaks out of the padded container to span the full
    viewport width (full-width-flush menu items). */
+
+/* Mobile: dark left slide-in drawer that overlays the page (matches source).
+   Hidden off-canvas by default; slides in when the nav is expanded. */
 header ul.nav-sections {
-  display: none;
-  order: 1;
+  position: fixed;
+  top: 40px;
+  left: 0;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
   flex-direction: column;
-  flex: 0 0 100vw;
-  width: 100vw;
-  max-width: 100vw;
-  margin-left: -16px;
-  margin-right: -16px;
+  width: 75vw;
+  max-width: 320px;
+  margin: 0;
+  padding: 16px 0;
+  background-color: var(--wknd-dark);
+  list-style: none;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
 }
 
 header nav[aria-expanded='true'] ul.nav-sections {
-  display: flex;
+  transform: translateX(0);
 }
 
 header ul.nav-sections li {
@@ -274,16 +284,16 @@ header ul.nav-sections li a {
   display: block;
   width: 100%;
   box-sizing: border-box;
-  color: var(--wknd-dark);
-  font-size: 16px;
-  font-weight: 600;
+  color: var(--wknd-light-text);
+  font-size: 14px;
+  font-weight: 400;
   text-transform: uppercase;
-  padding: 15px 16px;
+  padding: 15px 24px;
 }
 
 header ul.nav-sections li a:hover,
 header ul.nav-sections li a:focus {
-  background-color: var(--wknd-yellow);
+  background-color: rgb(255 255 255 / 10%);
 }
 
 /* Search */
@@ -338,6 +348,8 @@ header .nav-search-input {
   }
 
   header ul.nav-sections {
+    position: static;
+    z-index: auto;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -345,8 +357,12 @@ header .nav-search-input {
     order: 0;
     gap: 8px;
     width: auto;
-    margin-left: 0;
-    margin-right: 0;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    transform: none;
+    transition: none;
   }
 
   header ul.nav-sections li {
@@ -355,9 +371,15 @@ header .nav-search-input {
 
   header ul.nav-sections li a {
     width: auto;
+    color: var(--wknd-dark);
     font-size: 14px;
     font-weight: 400;
     padding: 15px 17px;
+  }
+
+  header ul.nav-sections li a:hover,
+  header ul.nav-sections li a:focus {
+    background-color: var(--wknd-yellow);
   }
 
   header nav[aria-expanded='true'] ul.nav-sections {

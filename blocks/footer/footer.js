@@ -21,6 +21,14 @@ async function fetchFooter() {
       img.setAttribute('src', `/${src.replace(/^\.?\/*/, '')}`);
     }
   });
+  // Internal links authored with a .html extension 404 on EDS (extensionless
+  // URLs); strip .html from same-site paths. Leave external and anchor links.
+  tmp.querySelectorAll('a[href]').forEach((a) => {
+    const href = a.getAttribute('href');
+    if (href && href.startsWith('/') && href.endsWith('.html')) {
+      a.setAttribute('href', href.replace(/\.html$/, ''));
+    }
+  });
   return tmp;
 }
 
