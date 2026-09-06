@@ -310,6 +310,59 @@ function decorateTemplateLayout(main, template) {
   }
 }
 
+/**
+ * Give images that were authored with an empty alt a meaningful description
+ * derived from nearby context (a sibling/section heading or the person name in
+ * a profile/byline card). Migrated WKND content frequently ships alt="" for
+ * article body photos and contributor portraits.
+ * @param {Element} main
+ */
+function decorateImageAlts(main) {
+  main.querySelectorAll('img').forEach((img) => {
+    if (img.getAttribute('alt')?.trim()) return;
+    // Profile/byline cards: use the person's name (nearest heading in the card).
+    const card = img.closest('.cards-profile li, .article-byline, .cards li');
+    const scope = card
+      || img.closest('.default-content-wrapper')
+      || img.closest('.section')
+      || main;
+    const heading = scope.querySelector('h1, h2, h3, h4, h5, h6')
+      || main.querySelector('h1');
+    const text = heading?.textContent.trim()
+      || document.title.replace(/\s*[|–-].*$/, '').trim();
+    if (text) img.setAttribute('alt', card ? text : `${text} — image`);
+  });
+}
+
+/**
+ * Normalize the heading outline so levels never skip a rank (WCAG heading-order).
+ * Migrated content mixes levels (e.g. h1 then h4 byline, or h2 then h5), which
+ * fails Lighthouse. We keep the original tags and CSS intact and only expose a
+ * corrected level to assistive tech via aria-level on any heading whose native
+ * rank would jump more than one below the previous visible heading.
+ * @param {Element} root
+ */
+function decorateHeadingOrder(root) {
+  // Drop empty headings (migration artifacts, e.g. a stray <h3></h3> inside an
+  // accordion answer) — they fail the empty-heading audit and add noise.
+  root.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((h) => {
+    if (!h.textContent.trim() && !h.querySelector('img')) h.remove();
+  });
+  const headings = [...root.querySelectorAll('h1, h2, h3, h4, h5, h6')]
+    .filter((h) => h.offsetParent !== null
+      && getComputedStyle(h).clipPath === 'none'
+      && h.getAttribute('aria-hidden') !== 'true');
+  let prev = 0;
+  headings.forEach((h) => {
+    const native = Number(h.getAttribute('aria-level')) || Number(h.tagName[1]);
+    // Allowed: same, one deeper, or any shallower level. A jump deeper than +1
+    // is the only violation — clamp it to prev + 1.
+    const level = native > prev + 1 && prev > 0 ? prev + 1 : native;
+    if (level !== Number(h.tagName[1])) h.setAttribute('aria-level', String(level));
+    prev = level;
+  });
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
   decorateIcons(main);
@@ -369,7 +422,14 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadFooter(doc.querySelector('body > footer'));
+  await loadFooter(doc.querySelector('body > footer'));
+
+  // Fill empty-alt images now that blocks have decorated (so profile/byline
+  // cards expose per-person names), then normalize the heading outline across
+  // the whole page (main + footer) — both run once the layout has settled so
+  // assistive tech sees meaningful alt text and a sequential heading order.
+  decorateImageAlts(main);
+  decorateHeadingOrder(doc.body);
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();

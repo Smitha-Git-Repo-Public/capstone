@@ -340,11 +340,21 @@ header .nav-search-icon {
 header .nav-search-input {
   border: none;
   background: transparent;
-  outline: none;
   flex: 1;
   color: var(--wknd-dark);
   font-size: 12px;
   text-transform: uppercase;
+}
+
+/* Move the focus ring to the whole search field so keyboard users get a
+   visible indicator without a doubled outline inside the input. */
+header .nav-search-input:focus {
+  outline: none;
+}
+
+header .nav-search-form:focus-within {
+  outline: 2px solid var(--wknd-dark);
+  outline-offset: 2px;
 }
 
 /* --- Desktop --- */

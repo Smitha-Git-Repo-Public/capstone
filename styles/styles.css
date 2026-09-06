@@ -287,6 +287,14 @@ button.button.accent:disabled:focus-visible {
   color: var(--dark-color);
 }
 
+/* Inline text links inside body copy must be distinguishable by more than
+   colour (WCAG 1.4.1 / Lighthouse link-in-text-block): underline them. Scoped
+   to default-content paragraphs and list items so card, nav, and CTA links
+   (styled elsewhere) are unaffected. */
+main .default-content-wrapper :where(p, li) a:any-link:not(.button) {
+  text-decoration: underline;
+}
+
 /* WKND default-content links render as plain inline links, not pill buttons */
 main .button-container {
   display: inline;
