@@ -464,7 +464,7 @@ header .nav-search-form:focus-within {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 90px 16px 40px;
+  padding: 72px 16px 40px;
   overflow-y: auto;
   background: rgb(0 0 0 / 55%);
 }
@@ -476,9 +476,9 @@ header .nav-search-form:focus-within {
 .nav-signin-modal {
   position: relative;
   width: 100%;
-  max-width: 560px;
+  max-width: 380px;
   box-sizing: border-box;
-  padding: 48px;
+  padding: 28px 32px 32px;
   background: var(--wknd-dark);
   color: var(--wknd-light-text);
   font-family: var(--wknd-nav-font);
@@ -486,40 +486,40 @@ header .nav-search-form:focus-within {
 
 .nav-signin-close {
   position: absolute;
-  top: 12px;
-  right: 16px;
+  top: 8px;
+  right: 12px;
   border: none;
   background: transparent;
   color: var(--wknd-light-text);
-  font-size: 32px;
+  font-size: 26px;
   line-height: 1;
   cursor: pointer;
 }
 
 .nav-signin-heading {
   margin: 0;
-  padding-bottom: 12px;
+  padding-bottom: 8px;
   border-bottom: 3px solid var(--wknd-yellow);
   display: inline-block;
   font-family: var(--heading-font-family);
   font-weight: 400;
-  font-size: 48px;
+  font-size: 32px;
   line-height: 1;
   color: var(--wknd-light-text);
 }
 
 .nav-signin-welcome {
-  margin: 28px 0 24px;
+  margin: 20px 0 16px;
   font-family: var(--heading-font-family);
   font-weight: 400;
-  font-size: 28px;
+  font-size: 20px;
   color: var(--wknd-light-text);
 }
 
 .nav-signin-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .nav-signin-field {
@@ -529,11 +529,12 @@ header .nav-search-form:focus-within {
 .nav-signin-field input {
   box-sizing: border-box;
   width: 100%;
-  padding: 20px;
+  padding: 12px 14px;
   border: 1px solid rgb(120 120 120);
   background: transparent;
   color: var(--wknd-light-text);
   font: inherit;
+  font-size: 14px;
   text-transform: uppercase;
 }
 
@@ -550,7 +551,7 @@ header .nav-search-form:focus-within {
 .nav-signin-forgot {
   color: var(--wknd-light-text);
   font-weight: 600;
-  font-size: 18px;
+  font-size: 14px;
   text-transform: uppercase;
   text-decoration: none;
 }
@@ -561,13 +562,14 @@ header .nav-search-form:focus-within {
 
 .nav-signin-submit {
   align-self: flex-start;
-  margin-top: 8px;
-  padding: 18px 48px;
+  margin-top: 4px;
+  padding: 12px 32px;
   border: none;
   background: var(--wknd-yellow);
   color: var(--wknd-dark);
   font: inherit;
   font-weight: 700;
+  font-size: 14px;
   text-transform: uppercase;
   cursor: pointer;
 }
