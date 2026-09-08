@@ -1,1 +1,7 @@
 /* add global styles that can be loaded post LCP here */
+
+/* Dynamic adventures listing: the activity filter bar (a nested `.tabs-filter`,
+   styled by tabs-filter.css) sits above the enhanced cards-article grid. */
+.article-list-filtered .tabs-filter {
+  margin-bottom: 8px;
+}

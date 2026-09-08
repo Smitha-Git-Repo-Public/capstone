@@ -388,11 +388,180 @@ function decorateBreadcrumb(main) {
   });
 }
 
+/**
+ * Infer an article category ("magazine" | "adventures") from the links inside a
+ * static listing block, so we can point the dynamic index query at the same
+ * collection the authored cards came from.
+ * @param {Element} el
+ * @returns {string}
+ */
+function inferCategory(el) {
+  const counts = { magazine: 0, adventures: 0 };
+  el.querySelectorAll('a[href]').forEach((a) => {
+    const m = a.getAttribute('href').match(/\/(magazine|adventures)\//);
+    if (m) counts[m[1]] += 1;
+  });
+  if (counts.magazine === 0 && counts.adventures === 0) return '';
+  return counts.adventures > counts.magazine ? 'adventures' : 'magazine';
+}
+
+/**
+ * Tag the site's static article/adventure listings so they can be enhanced
+ * from `query-index.json` later (see enhanceDynamicListings). This only records
+ * intent via data attributes — it never alters or removes the authored markup,
+ * so the static, fully-styled cards keep working as the fallback if the index
+ * is unavailable (e.g. not yet published) or JavaScript fails.
+ *
+ * Targets:
+ *  - `.cards-article` grids (homepage teasers, magazine "All Articles").
+ *  - the `.tabs-filter` activity filter on the adventures listing page.
+ *  - `.columns-featured` / `.hero-feature` curated spotlights.
+ *
+ * The category is inferred from the existing links, and results are scoped to
+ * the current page's locale.
+ * @param {Element} main
+ */
+function decorateDynamicListings(main) {
+  const path = window.location.pathname.replace(/\.html$/, '').replace(/\/$/, '');
+  const parts = path.split('/').filter(Boolean);
+  const locale = parts.length >= 2 ? `${parts[0]}/${parts[1]}` : '';
+  // Dedicated listing pages (…/magazine, …/adventures) show the whole
+  // collection; teaser grids elsewhere (e.g. the homepage) keep the authored
+  // card count as a limit so they stay compact.
+  const isListingPage = /\/(magazine|adventures)$/.test(path);
+
+  // Categories that already have a curated spotlight on this page. Their teaser
+  // grids skip the newest article (which the spotlight shows) to avoid a
+  // duplicate, mirroring the authored design where the featured article and the
+  // "Recent Articles" grid never overlapped.
+  const spotlightCategories = new Set(
+    [...main.querySelectorAll('.columns-featured, .hero-feature')]
+      .map(inferCategory)
+      .filter(Boolean),
+  );
+
+  const tag = (el, category, authoredCount) => {
+    el.dataset.dynamicCategory = category;
+    if (locale) el.dataset.dynamicLocale = locale;
+    if (!isListingPage && authoredCount) el.dataset.dynamicLimit = String(authoredCount);
+    if (!isListingPage && spotlightCategories.has(category)) el.dataset.dynamicOffset = '1';
+  };
+
+  // Standalone article-card grids.
+  main.querySelectorAll('.cards-article').forEach((grid) => {
+    const category = inferCategory(grid);
+    if (!category) return;
+    const authoredCount = grid.querySelectorAll(':scope > div').length;
+    tag(grid, category, authoredCount);
+  });
+
+  // Adventures activity filter — enhanced into a dynamic, index-driven filter.
+  main.querySelectorAll('.tabs-filter').forEach((tabs) => {
+    const category = inferCategory(tabs);
+    if (!category) return;
+    tag(tabs, category, 0);
+    tabs.dataset.dynamicFilter = 'activity';
+  });
+
+  // Curated single-teaser spotlights (homepage "Featured Article" / "Next
+  // Adventures"): repoint each at the newest article in its category.
+  main.querySelectorAll('.columns-featured, .hero-feature').forEach((spot) => {
+    const category = inferCategory(spot);
+    if (!category) return;
+    spot.dataset.spotlightCategory = category;
+    if (locale) spot.dataset.spotlightLocale = locale;
+  });
+}
+
+/**
+ * Enhance the tagged listings from the query index, in place, after the static
+ * blocks have already decorated. Runs below the fold (loadLazy) so the hero/LCP
+ * render is never gated on the index fetch. If the index is empty/unavailable,
+ * every block is left exactly as authored — the static cards remain the
+ * fallback and nothing is emptied.
+ * @param {Element} main
+ */
+async function enhanceDynamicListings(main) {
+  const listings = [...main.querySelectorAll('[data-dynamic-category]')];
+  const spots = [...main.querySelectorAll('[data-spotlight-category]')];
+  if (!listings.length && !spots.length) return;
+
+  const {
+    fetchArticles, selectArticles, collectActivities,
+    buildArticleCardItem, buildFilterBar, fillSpotlight,
+  } = await import('./articles.js');
+  const { createOptimizedPicture } = await import('./aem.js');
+  const articles = await fetchArticles();
+  // No index (e.g. not yet published) → keep all authored fallbacks untouched.
+  if (!articles.length) return;
+
+  // The enhanced grids reuse the cards-article styling. Ensure that CSS is
+  // present even on a page whose static markup wasn't a cards-article block
+  // (e.g. the adventures activity filter), so enhanced cards are styled.
+  if (listings.some((b) => !b.classList.contains('cards-article'))) {
+    loadCSS(`${window.hlx.codeBasePath}/blocks/cards-article/cards-article.css`);
+  }
+
+  // Eager images: these grids are the page's primary content, and matching the
+  // authored layout matters more than deferring below-fold decode. (Lazy left
+  // the second grid visually blank until scrolled.)
+  const makePicture = (src, alt) => createOptimizedPicture(src, alt, true, [{ width: '750' }]);
+
+  listings.forEach((block) => {
+    const { dynamicCategory: category, dynamicLocale: locale = '' } = block.dataset;
+    const limit = parseInt(block.dataset.dynamicLimit, 10);
+    const offset = parseInt(block.dataset.dynamicOffset, 10);
+    const query = (activity) => selectArticles(articles, {
+      category,
+      locale,
+      activity,
+      offset: Number.isNaN(offset) ? 0 : offset,
+      limit: Number.isNaN(limit) ? Infinity : limit,
+    });
+
+    const initial = query('');
+    if (!initial.length) return; // nothing indexed for this scope — keep static
+
+    if (block.dataset.dynamicFilter === 'activity') {
+      // Rebuild as: activity filter bar + a cards-article grid whose <li>s swap
+      // on selection. Replace the block's content but keep the block element.
+      const ul = document.createElement('ul');
+      const fill = (activity) => {
+        ul.textContent = '';
+        query(activity).forEach((a) => ul.append(buildArticleCardItem(a, makePicture)));
+      };
+      fill('');
+      const bar = buildFilterBar(collectActivities(initial), fill);
+      block.classList.remove('tabs-filter');
+      block.classList.add('cards-article', 'article-list-filtered');
+      block.textContent = '';
+      block.append(bar, ul);
+      return;
+    }
+
+    // Plain grid: swap the authored <ul> for the dynamic one.
+    const ul = document.createElement('ul');
+    initial.forEach((a) => ul.append(buildArticleCardItem(a, makePicture)));
+    block.textContent = '';
+    block.append(ul);
+  });
+
+  spots.forEach((spot) => {
+    const [article] = selectArticles(articles, {
+      category: spot.dataset.spotlightCategory,
+      locale: spot.dataset.spotlightLocale || '',
+      limit: 1,
+    });
+    if (article) fillSpotlight(spot, article);
+  });
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSectionMetadata(main);
+  decorateDynamicListings(main);
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
@@ -437,6 +606,11 @@ async function loadLazy(doc) {
 
   const main = doc.querySelector('main');
   await loadSections(main);
+
+  // Enhance the static article/adventure listings from the query index, in
+  // place. Done here (below the fold) so the hero/LCP render is never gated on
+  // the fetch, and so a missing index simply leaves the authored cards showing.
+  enhanceDynamicListings(main);
 
   // Regroup sections into template-specific two-column layouts only after all
   // blocks have loaded, so moving a block's wrapper never strands it as
