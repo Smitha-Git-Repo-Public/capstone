@@ -415,7 +415,12 @@ function inferCategory(el) {
  * Targets:
  *  - `.cards-article` grids (homepage teasers, magazine "All Articles").
  *  - the `.tabs-filter` activity filter on the adventures listing page.
- *  - `.columns-featured` / `.hero-feature` curated spotlights.
+ *
+ * The curated single-teaser spotlights (`.columns-featured` "Featured Article"
+ * and `.hero-feature` "Next Adventures") are intentionally left as authored —
+ * they are editorial picks on the source site, not "newest article" slots — but
+ * their linked article is recorded so the dynamic grid in the same category can
+ * exclude it (avoiding a duplicate, as in the authored design).
  *
  * The category is inferred from the existing links, and results are scoped to
  * the current page's locale.
@@ -430,21 +435,26 @@ function decorateDynamicListings(main) {
   // card count as a limit so they stay compact.
   const isListingPage = /\/(magazine|adventures)$/.test(path);
 
-  // Categories that already have a curated spotlight on this page. Their teaser
-  // grids skip the newest article (which the spotlight shows) to avoid a
-  // duplicate, mirroring the authored design where the featured article and the
-  // "Recent Articles" grid never overlapped.
-  const spotlightCategories = new Set(
-    [...main.querySelectorAll('.columns-featured, .hero-feature')]
-      .map(inferCategory)
-      .filter(Boolean),
-  );
+  // Article path each curated spotlight links to, keyed by category, so the
+  // matching grid can exclude it (the authored design never repeats the
+  // featured article in the "Recent Articles" grid).
+  const spotlightPaths = {};
+  main.querySelectorAll('.columns-featured, .hero-feature').forEach((spot) => {
+    const category = inferCategory(spot);
+    const href = spot.querySelector(`a[href*="/${category}/"]`)?.getAttribute('href');
+    if (category && href) {
+      spotlightPaths[category] = href.replace(/\.html?$/, '').replace(/\/$/, '');
+    }
+  });
 
   const tag = (el, category, authoredCount) => {
     el.dataset.dynamicCategory = category;
     if (locale) el.dataset.dynamicLocale = locale;
     if (!isListingPage && authoredCount) el.dataset.dynamicLimit = String(authoredCount);
-    if (!isListingPage && spotlightCategories.has(category)) el.dataset.dynamicOffset = '1';
+    // On teaser pages, drop the curated spotlight's article from the grid.
+    if (!isListingPage && spotlightPaths[category]) {
+      el.dataset.dynamicExclude = spotlightPaths[category];
+    }
   };
 
   // Standalone article-card grids.
@@ -462,15 +472,6 @@ function decorateDynamicListings(main) {
     tag(tabs, category, 0);
     tabs.dataset.dynamicFilter = 'activity';
   });
-
-  // Curated single-teaser spotlights (homepage "Featured Article" / "Next
-  // Adventures"): repoint each at the newest article in its category.
-  main.querySelectorAll('.columns-featured, .hero-feature').forEach((spot) => {
-    const category = inferCategory(spot);
-    if (!category) return;
-    spot.dataset.spotlightCategory = category;
-    if (locale) spot.dataset.spotlightLocale = locale;
-  });
 }
 
 /**
@@ -483,12 +484,11 @@ function decorateDynamicListings(main) {
  */
 async function enhanceDynamicListings(main) {
   const listings = [...main.querySelectorAll('[data-dynamic-category]')];
-  const spots = [...main.querySelectorAll('[data-spotlight-category]')];
-  if (!listings.length && !spots.length) return;
+  if (!listings.length) return;
 
   const {
     fetchArticles, selectArticles, collectActivities,
-    buildArticleCardItem, buildFilterBar, fillSpotlight,
+    buildArticleCardItem, buildFilterBar,
   } = await import('./articles.js');
   const { createOptimizedPicture } = await import('./aem.js');
   const articles = await fetchArticles();
@@ -510,12 +510,12 @@ async function enhanceDynamicListings(main) {
   listings.forEach((block) => {
     const { dynamicCategory: category, dynamicLocale: locale = '' } = block.dataset;
     const limit = parseInt(block.dataset.dynamicLimit, 10);
-    const offset = parseInt(block.dataset.dynamicOffset, 10);
+    const exclude = block.dataset.dynamicExclude;
     const query = (activity) => selectArticles(articles, {
       category,
       locale,
       activity,
-      offset: Number.isNaN(offset) ? 0 : offset,
+      exclude,
       limit: Number.isNaN(limit) ? Infinity : limit,
     });
 
@@ -544,15 +544,6 @@ async function enhanceDynamicListings(main) {
     initial.forEach((a) => ul.append(buildArticleCardItem(a, makePicture)));
     block.textContent = '';
     block.append(ul);
-  });
-
-  spots.forEach((spot) => {
-    const [article] = selectArticles(articles, {
-      category: spot.dataset.spotlightCategory,
-      locale: spot.dataset.spotlightLocale || '',
-      limit: 1,
-    });
-    if (article) fillSpotlight(spot, article);
   });
 }
 

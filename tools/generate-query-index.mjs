@@ -18,7 +18,17 @@
  * already express the grouping — so the tags stay in sync with the source
  * without editing every article.
  *
- * Usage: node tools/generate-query-index.mjs
+ * IMAGES: the local content references images by their authoring path
+ * (`/media-da/...`), which only resolves in local preview. The published site
+ * serves images as hashed EDS media (`./media_<hash>.jpg`) under each article's
+ * own path. So the card thumbnail is resolved from the *published* article page
+ * (via --host) and stored as a host-relative `/{locale}/{cat}/{slug}/media_…`
+ * URL that works on both the preview (.aem.page) and live (.aem.live) hosts.
+ * Without --host it falls back to the local `/media-da/...` path (preview only).
+ *
+ * Usage:
+ *   node tools/generate-query-index.mjs \
+ *     [--host https://main--capstone--smitha-git-repo-public.aem.page]
  * (writes content/query-index.json)
  */
 
@@ -34,6 +44,10 @@ const CONTENT_DIR = join(REPO_ROOT, 'content');
 
 // Only these content sections are treated as indexable article collections.
 const CATEGORIES = ['magazine', 'adventures'];
+
+// Optional host to resolve published media hashes from (see IMAGES note above).
+const hostArgIdx = process.argv.indexOf('--host');
+const HOST = hostArgIdx >= 0 ? process.argv[hostArgIdx + 1].replace(/\/$/, '') : '';
 
 /** Recursively collect every *.plain.html file under a directory. */
 function walk(dir) {
@@ -75,10 +89,41 @@ function readMetadata(html, key) {
   return m ? stripTags(m[1]) : '';
 }
 
-/** First real content image on the page (used as the card thumbnail). */
-function firstImage(html) {
+/** First image `src` on a page's HTML (raw, as authored/published). */
+function firstImageSrc(html) {
   const m = html.match(/<img[^>]*\ssrc="([^"]+)"/i);
   return m ? m[1] : '';
+}
+
+/** The local (preview-only) image path from a content file's HTML. */
+function localImage(html) {
+  return firstImageSrc(html);
+}
+
+/**
+ * Resolve the *published* thumbnail for an article by fetching its rendered
+ * page from HOST and reading the first image's hashed media reference. The
+ * published `src` is a relative `./media_<hash>.ext?…`; resolve it against the
+ * article's directory into a host-relative absolute path (works on preview and
+ * live). Strips the optimize query so the block applies its own sizing.
+ * Falls back to '' so the caller can keep the local path.
+ * @param {string} articlePath e.g. /us/en/magazine/san-diego-surf
+ */
+async function publishedImage(articlePath) {
+  try {
+    const res = await fetch(`${HOST}${articlePath}.plain.html`);
+    if (!res.ok) return '';
+    const html = await res.text();
+    const src = decodeEntities(firstImageSrc(html));
+    if (!src) return '';
+    const clean = src.split('?')[0]; // drop ?width=…&format=…&optimize=…
+    if (/^https?:\/\//.test(clean)) return clean;
+    // Resolve against the article's directory: ./media_x -> /dir/media_x
+    const dir = articlePath.slice(0, articlePath.lastIndexOf('/'));
+    return new URL(clean, `https://h${dir}/`).pathname;
+  } catch {
+    return '';
+  }
 }
 
 /** First heading text, used as a title fallback when metadata is absent. */
@@ -133,7 +178,7 @@ function getActivities(locale, path) {
   return set ? [...set].sort().join(', ') : '';
 }
 
-function buildEntry(file) {
+async function buildEntry(file) {
   const html = readFileSync(file, 'utf8');
   // /content/us/en/magazine/ski-touring.plain.html -> /us/en/magazine/ski-touring
   const rel = `/${relative(CONTENT_DIR, file)}`.replace(/\.plain\.html$/, '');
@@ -142,11 +187,15 @@ function buildEntry(file) {
   const catIdx = segments.indexOf(category);
   const locale = segments.slice(0, catIdx).join('/'); // us/en
 
+  // Prefer the published (hashed) media URL so cards render on the live/preview
+  // hosts; fall back to the local authoring path when no --host is given.
+  const image = (HOST && await publishedImage(rel)) || localImage(html);
+
   return {
     path: rel,
     title: readMetadata(html, 'Title') || firstHeading(html) || segments[segments.length - 1],
     description: readMetadata(html, 'Description'),
-    image: firstImage(html),
+    image,
     category,
     locale,
     activity: category === 'adventures' ? getActivities(locale, rel) : '',
@@ -164,10 +213,16 @@ function isArticle(file) {
 }
 
 const files = walk(CONTENT_DIR).filter(isArticle);
-const data = files
-  .map(buildEntry)
+const data = (await Promise.all(files.map(buildEntry)))
   // Newest first so "Recent Articles" and the featured picks are meaningful.
   .sort((a, b) => b.lastModified - a.lastModified || a.path.localeCompare(b.path));
+
+if (HOST) {
+  const missing = data.filter((d) => !d.image || d.image.startsWith('/media-da/'));
+  // eslint-disable-next-line no-console
+  console.log(`Resolved published images for ${data.length - missing.length}/${data.length} articles`
+    + `${missing.length ? ` (fell back to local path for ${missing.length})` : ''}`);
+}
 
 const sheet = {
   total: data.length,
