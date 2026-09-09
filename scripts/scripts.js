@@ -248,11 +248,22 @@ function decorateShareStory(shareSection) {
   });
 }
 
+// Brand-logo SVGs for the byline social links, matching the footer's icons
+// (source uses real Facebook/Twitter/Instagram marks, not text glyphs). The
+// glyph is drawn via currentColor so CSS controls the colour (white on dark).
+/* eslint-disable max-len */
+const SOCIAL_ICONS = {
+  facebook: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.14 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.9 3.78-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.9h-2.34V22c4.78-.8 8.44-4.94 8.44-9.94Z"/></svg>',
+  twitter: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 5.9c-.7.32-1.5.53-2.3.63.83-.5 1.46-1.28 1.76-2.22-.78.46-1.63.8-2.55.98A4.02 4.02 0 0 0 12 8.98c0 .31.04.62.1.9A11.4 11.4 0 0 1 3.9 4.6a4.02 4.02 0 0 0 1.24 5.37c-.65-.02-1.26-.2-1.8-.5v.05c0 1.95 1.4 3.58 3.24 3.95-.34.1-.7.14-1.06.14-.26 0-.51-.02-.76-.07a4.03 4.03 0 0 0 3.76 2.8A8.08 8.08 0 0 1 2 18.06 11.38 11.38 0 0 0 8.17 19.9c7.4 0 11.46-6.14 11.46-11.46l-.01-.52A8.2 8.2 0 0 0 22 5.9Z"/></svg>',
+  instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>',
+};
+/* eslint-enable max-len */
+
 /**
  * Lay out the author byline to match the source: the small circular avatar and
  * the name/role sit on the left, and the social links (Facebook/Twitter/…) form
- * a single row on the right rather than a vertical stack. Groups the lone-link
- * social paragraphs into one container the CSS can render as an inline row.
+ * a single row of brand-logo icons in one dark box on the right (like the
+ * footer's "Follow Us"), rather than a vertical stack of text links.
  * @param {Element} colWrap the article column wrapper
  */
 function decorateArticleByline(colWrap) {
@@ -268,7 +279,10 @@ function decorateArticleByline(colWrap) {
   socialParas[0].before(social);
   socialParas.forEach((p) => {
     const a = p.querySelector('a[href]');
-    a.setAttribute('aria-label', a.textContent.trim());
+    const label = a.textContent.trim();
+    a.setAttribute('aria-label', label);
+    const icon = SOCIAL_ICONS[label.toLowerCase()];
+    if (icon) a.innerHTML = icon; // replace text with the brand glyph
     social.append(a);
     p.remove();
   });

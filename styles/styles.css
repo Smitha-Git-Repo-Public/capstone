@@ -546,65 +546,35 @@ body.template-magazine-article main .article-byline > h2 {
   flex: 1 1 auto;
 }
 
-/* social links: inline row of icon links (source shows Facebook/Twitter/…) */
+/* social links: a single dark box holding white brand-logo icons in a row,
+   mirroring the footer "Follow Us" treatment and the source byline. */
 body.template-magazine-article main .article-byline-social {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 22px;
   margin-left: auto;
   flex: 0 0 auto;
+  padding: 14px 22px;
+  background-color: var(--dark-color);
 }
 
 body.template-magazine-article main .article-byline-social a:any-link {
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border: 1px solid currentcolor;
-  border-radius: 50%;
-  color: var(--text-color);
-
-  /* Hide the text label robustly (font-size:0 alone can be overridden by more
-     specific link rules): clip it to nothing and keep only the ::before glyph. */
-  overflow: hidden;
-  text-indent: -9999px;
-  white-space: nowrap;
+  color: var(--background-color);
   text-decoration: none;
-  transition: background-color 0.2s, color 0.2s;
+  transition: opacity 0.2s;
 }
 
 body.template-magazine-article main .article-byline-social a:hover {
-  background-color: var(--text-color);
-  color: var(--background-color);
+  opacity: 0.8;
 }
 
-body.template-magazine-article main .article-byline-social a::before {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-indent: 0;
-  font-size: 15px;
-  font-weight: 700;
-  font-family: var(--body-font-family);
-}
-
-/* Text-glyph fallbacks so the links read as recognizable social icons without
-   adding icon assets: f / 𝕏 / IG. */
-body.template-magazine-article main .article-byline-social a[aria-label='Facebook']::before {
-  content: 'f';
-}
-
-body.template-magazine-article main .article-byline-social a[aria-label='Twitter']::before {
-  content: '𝕏';
-}
-
-body.template-magazine-article main .article-byline-social a[aria-label='Instagram']::before {
-  content: 'IG';
-  font-size: 11px;
+body.template-magazine-article main .article-byline-social svg {
+  width: 22px;
+  height: 22px;
+  display: block;
 }
 
 /* Share This Story sidebar: heading + related-article list. Each item is a
