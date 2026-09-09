@@ -661,6 +661,12 @@ body.template-adventure-detail main .tabs-content h2 {
     padding: 0;
   }
 
+  /* keep the byline's separator spacing on desktop (the rule above otherwise
+     zeroes this wrapper's padding, collapsing the gap below the rule) */
+  body.template-magazine-article main .article-layout .section > div.article-byline {
+    padding-top: 60px;
+  }
+
   body.template-adventure-detail main .adventure-layout {
     max-width: 1200px;
     margin: 0 auto;
