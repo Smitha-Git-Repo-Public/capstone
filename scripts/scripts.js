@@ -286,6 +286,21 @@ function decorateArticleByline(colWrap) {
     social.append(a);
     p.remove();
   });
+
+  // Group the name (h2) and role line(s) into one text block so they stack
+  // vertically beside the avatar (name above role), matching the source.
+  const name = byline.querySelector(':scope > h2');
+  if (name) {
+    const text = document.createElement('div');
+    text.className = 'article-byline-text';
+    name.before(text);
+    let node = text.nextElementSibling;
+    while (node && node !== social) {
+      const next = node.nextElementSibling;
+      if (node.tagName === 'H2' || node.tagName === 'P') text.append(node);
+      node = next;
+    }
+  }
 }
 
 /**

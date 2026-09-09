@@ -515,6 +515,16 @@ body.template-magazine-article main .article-byline {
   flex-wrap: wrap;
 }
 
+/* name + role stacked vertically (name above role) beside the avatar; takes the
+   remaining width so the social box is pushed to the right */
+body.template-magazine-article main .article-byline-text {
+  flex: 1 1 auto;
+}
+
+body.template-magazine-article main .article-byline-text p {
+  margin: 0;
+}
+
 body.template-magazine-article main .article-byline > p:first-child {
   flex: 0 0 auto;
   width: 60px;
@@ -535,15 +545,6 @@ body.template-magazine-article main .article-byline h2 {
   border-bottom: none;
   padding-bottom: 0;
   display: block;
-}
-
-body.template-magazine-article main .article-byline > p:not(:first-child) {
-  margin: 0;
-}
-
-/* name/role block takes the remaining space so the social row is pushed right */
-body.template-magazine-article main .article-byline > h2 {
-  flex: 1 1 auto;
 }
 
 /* social links: a single dark box holding white brand-logo icons in a row,
