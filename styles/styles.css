@@ -513,6 +513,12 @@ body.template-magazine-article main .article-byline {
   align-items: center;
   gap: 25px;
   flex-wrap: wrap;
+
+  /* thin full-width rule with generous space above, separating the article body
+     from the author bio (matches the source) */
+  margin-top: 60px;
+  padding-top: 60px;
+  border-top: 1px solid rgb(0 0 0 / 12%);
 }
 
 /* name + role stacked vertically (name above role) beside the avatar; takes the
