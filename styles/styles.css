@@ -505,16 +505,20 @@ body.template-magazine-article main blockquote {
   text-align: left;
 }
 
-/* Author bio: small circular avatar (60px) floated left with the name/role
-   and social links stacked to its right — matching the source .cmp-byline. */
+/* Author bio: small circular avatar (60px) on the left with the name/role, and
+   the social links as a single row of icons on the right — matching the source
+   .cmp-byline (avatar | name+role | social icons). */
 body.template-magazine-article main .article-byline {
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  flex-wrap: wrap;
 }
 
 body.template-magazine-article main .article-byline > p:first-child {
-  float: left;
+  flex: 0 0 auto;
   width: 60px;
-  margin: 7px 25px 7px 0;
+  margin: 0;
 }
 
 body.template-magazine-article main .article-byline > p:first-child :where(picture, img) {
@@ -535,6 +539,116 @@ body.template-magazine-article main .article-byline h2 {
 
 body.template-magazine-article main .article-byline > p:not(:first-child) {
   margin: 0;
+}
+
+/* name/role block takes the remaining space so the social row is pushed right */
+body.template-magazine-article main .article-byline > h2 {
+  flex: 1 1 auto;
+}
+
+/* social links: inline row of icon links (source shows Facebook/Twitter/…) */
+body.template-magazine-article main .article-byline-social {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+body.template-magazine-article main .article-byline-social a:any-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid currentcolor;
+  border-radius: 50%;
+  color: var(--text-color);
+
+  /* Hide the text label robustly (font-size:0 alone can be overridden by more
+     specific link rules): clip it to nothing and keep only the ::before glyph. */
+  overflow: hidden;
+  text-indent: -9999px;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+body.template-magazine-article main .article-byline-social a:hover {
+  background-color: var(--text-color);
+  color: var(--background-color);
+}
+
+body.template-magazine-article main .article-byline-social a::before {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-indent: 0;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--body-font-family);
+}
+
+/* Text-glyph fallbacks so the links read as recognizable social icons without
+   adding icon assets: f / 𝕏 / IG. */
+body.template-magazine-article main .article-byline-social a[aria-label='Facebook']::before {
+  content: 'f';
+}
+
+body.template-magazine-article main .article-byline-social a[aria-label='Twitter']::before {
+  content: '𝕏';
+}
+
+body.template-magazine-article main .article-byline-social a[aria-label='Instagram']::before {
+  content: 'IG';
+  font-size: 11px;
+}
+
+/* Share This Story sidebar: heading + related-article list. Each item is a
+   bold uppercase title link with the publication date on a muted line below,
+   set off by a thin left rule (matching the source). */
+body.template-magazine-article main .share-story h5 {
+  margin: 0 0 20px;
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+body.template-magazine-article main .share-story ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+body.template-magazine-article main .share-story li {
+  padding: 0 0 4px 16px;
+  margin: 0 0 24px;
+  border-left: 2px solid var(--dark-color);
+  line-height: 1.4;
+}
+
+body.template-magazine-article main .share-story li a:any-link {
+  display: block;
+  color: var(--text-color);
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+body.template-magazine-article main .share-story li a:hover {
+  text-decoration: underline;
+}
+
+body.template-magazine-article main .share-story-date {
+  display: block;
+  margin-top: 6px;
+  color: rgb(105 105 105);
+  font-size: var(--body-font-size-xs);
+  text-transform: uppercase;
 }
 
 /* ==========================================================================

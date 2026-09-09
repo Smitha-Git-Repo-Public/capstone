@@ -221,6 +221,59 @@ function groupSections(main, sections, className) {
   sections.forEach((s) => wrapper.append(s));
 }
 
+// Trailing publication date embedded in a share-list link, e.g.
+// "San Diego Surf Spots Thursday, 9 Jul 2020".
+const SHARE_DATE_RE = /\s+((?:Sun|Mon|Tues|Wednes|Thurs|Fri|Satur)day,\s+\d{1,2}\s+\w+\s+\d{4})$/;
+
+/**
+ * Style the "Share This Story" sidebar's related-article list to match the
+ * source: each item is the article title (a bold uppercase link) with its
+ * publication date on a separate, muted line below. The migrated content packs
+ * both into one link's text ("Title Weekday, D Mon YYYY"), so split the trailing
+ * date out into its own element. Tags the wrapper for CSS.
+ * @param {Element} shareSection the "Share This Story" section
+ */
+function decorateShareStory(shareSection) {
+  const wrapper = shareSection.querySelector('.default-content-wrapper') || shareSection;
+  wrapper.classList.add('share-story');
+  wrapper.querySelectorAll('li > a[href]').forEach((a) => {
+    const m = a.textContent.match(SHARE_DATE_RE);
+    if (!m) return;
+    const [, dateText] = m;
+    a.textContent = a.textContent.slice(0, m.index).trim();
+    const date = document.createElement('span');
+    date.className = 'share-story-date';
+    date.textContent = dateText;
+    a.after(date);
+  });
+}
+
+/**
+ * Lay out the author byline to match the source: the small circular avatar and
+ * the name/role sit on the left, and the social links (Facebook/Twitter/…) form
+ * a single row on the right rather than a vertical stack. Groups the lone-link
+ * social paragraphs into one container the CSS can render as an inline row.
+ * @param {Element} colWrap the article column wrapper
+ */
+function decorateArticleByline(colWrap) {
+  const byline = colWrap.querySelector('.article-byline');
+  if (!byline) return;
+  const socialParas = [...byline.querySelectorAll(':scope > p')].filter((p) => {
+    const a = p.querySelector(':scope > a[href]');
+    return a && p.children.length === 1 && p.textContent.trim() === a.textContent.trim();
+  });
+  if (socialParas.length < 2) return;
+  const social = document.createElement('div');
+  social.className = 'article-byline-social';
+  socialParas[0].before(social);
+  socialParas.forEach((p) => {
+    const a = p.querySelector('a[href]');
+    a.setAttribute('aria-label', a.textContent.trim());
+    social.append(a);
+    p.remove();
+  });
+}
+
 /**
  * Template-specific desktop layouts. WKND renders article and adventure detail
  * pages as two columns: the main content on the left and a narrow sidebar
@@ -256,6 +309,8 @@ function decorateTemplateLayout(main, template) {
       const hasAvatar = first && (first.querySelector?.('picture, img'));
       if (hasAvatar && w.querySelector('h2')) w.classList.add('article-byline');
     });
+    decorateArticleByline(colWrap);
+    decorateShareStory(share);
     groupSections(main, [colWrap, share], 'article-layout');
   } else if (template === 'adventure-detail') {
     // The carousel + H1 stay full-width; below them the trip details block
